@@ -17,7 +17,7 @@ const Footer = () => {
           />
                   <h1>TrendTrove</h1>
               </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.</p>
+              <p>TechTrove is your ultimate destination for high-quality electronics and cutting-edge gadgets designed to simplify and enhance your daily life. Our mission is to bring you the latest technology at unbeatable prices, backed by excellent customer service and a seamless shopping experience.</p>
             </Col>
             <Col md={3} sm={5} className='box'>
               <h2>About Us</h2>

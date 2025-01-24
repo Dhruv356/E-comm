@@ -92,7 +92,7 @@ const NavBar = () => {
         </div>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="justify-content-end flex-grow-1 pe-3">
-            {/* <Nav.Item>
+             {/* <Nav.Item>
               <Link
                 aria-label="Go to Home Page"
                 className="navbar-link"
@@ -101,8 +101,8 @@ const NavBar = () => {
               >
                 <span className="nav-link-label">Home</span>
               </Link>
-            </Nav.Item> */}
-            {/* <Nav.Item>
+            </Nav.Item> 
+             <Nav.Item>
               <Link
                 aria-label="Go to Cart Page"
                 className="navbar-link"
@@ -111,7 +111,7 @@ const NavBar = () => {
               >
                 <span className="nav-link-label">product</span>
               </Link>
-            </Nav.Item> */} 
+            </Nav.Item>  */}
 
             <Nav.Item>
               <Link
@@ -135,6 +135,11 @@ const NavBar = () => {
               </Link>
             </Nav.Item>
             <Nav.Item className="expanded-cart">
+            <Link
+                aria-label="Go to Cart Page"
+                to="/login"
+               
+              >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -147,6 +152,7 @@ const NavBar = () => {
                   clipRule="evenodd"
                 />
               </svg>
+              </Link>
               <Link
                 aria-label="Go to Cart Page"
                 to="/cart"

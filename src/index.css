@@ -360,3 +360,92 @@ button.delete ion-icon {
   background-color: #0f3460; /* Same dark blue background on hover */
   color: white; /* White text on hover */
 }
+/* Background Gradient */
+.login-page {
+  background: url('../../Images/bgl.jpg') no-repeat center center / cover;
+  padding: 100px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.login-form:hover {
+  transform: scale(1.02);
+}
+
+.login-form h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  outline: none;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #2c1184;
+  background-color: #fff;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #0a3281;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #0a0851;
+}
+
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+.signup-link a {
+  color: #1c2ac8;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}

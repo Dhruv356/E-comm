@@ -12,6 +12,7 @@ import productImg08 from "../Images/arm-chair-02.jpg";
 import productImg09 from "../Images/arm-chair-03.jpg";
 import productImg10 from "../Images/arm-chair-01.jpg";
 
+
 import phone01 from "../Images/phone-01.jpg";
 import phone02 from "../Images/phone-02.jpg";
 import phone03 from "../Images/phone-03.png";
@@ -83,7 +84,7 @@ export const serviceData = [
   {
     icon: <ion-icon name="shield-half-outline"></ion-icon>,
     title: "Secure Payment",
-    subtitle: "Lorem ipsum dolor sit amet.",
+    subtitle: "At TechTrove, ensuring the security of your payment information is our top priority. We employ advanced security measures to provide you with a safe and secure shopping experience.",
     bg: "#e2f2b2",
   },
   {
@@ -95,6 +96,30 @@ export const serviceData = [
 ];
 
 export const discoutProducts = [
+  
+  {
+    id: "14",
+    productName: "Apple iPhone 13 Pro",
+    imgUrl: phone05,
+    category: "mobile",
+    price: 80000,
+    shortDesc:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
+    reviews: [
+      {
+        rating: 4.8,
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      },
+      {
+        rating: 4.9,
+        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+      },
+    ],
+    avgRating: 4.8,
+  },
+  
   // {
   //   id: "01",
   //   productName: "Stone and Beam Westview ",

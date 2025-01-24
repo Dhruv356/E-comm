@@ -9,8 +9,8 @@ const Home = () => {
   const newArrivalData = products.filter(
     (item) => item.category === "mobile" || item.category === "wireless"
   );
-  const bestSales = products.filter((item) => item.category === "sofa");
-  useWindowScrollToTop();
+  // const bestSales = products.filter((item) => item.category === "sofa");
+  // useWindowScrollToTop();
   return (
     <Fragment>
       <SliderHome />
