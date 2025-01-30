@@ -4,9 +4,13 @@ import "./navbar.css";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import logo from "../../Images/logo1.png";
+import SearchBar from "../SeachBar/SearchBar";
+import { products } from "../../utils/products";
 
 
 const NavBar = () => {
+  const [filterList, setFilterList] = useState(products);
+  const [activeCategory, setActiveCategory] = useState("All");
   const { cartList } = useSelector((state) => state.cart);
   const [expand, setExpand] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
@@ -114,6 +118,7 @@ const NavBar = () => {
             </Nav.Item>  */}
 
             <Nav.Item>
+              <SearchBar setFilterList={setFilterList} products={products}/>
               <Link
                 aria-label="Go to Shop Page"
                 className="navbar-link"
