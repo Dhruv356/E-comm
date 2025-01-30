@@ -4,6 +4,8 @@ import Section from "../components/Section";
 import { products, discoutProducts } from "../utils/products";
 import SliderHome from "../components/Slider";
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const newArrivalData = products.filter(
@@ -11,6 +13,7 @@ const Home = () => {
   );
   // const bestSales = products.filter((item) => item.category === "sofa");
   // useWindowScrollToTop();
+    
   return (
     <Fragment>
       <SliderHome />

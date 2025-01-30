@@ -40,7 +40,7 @@ const Signup = () => {
           <div className="form-group">
             <label>Full Name</label>
             <input
-              type="text"
+              type="input"
               placeholder="Enter your full name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
