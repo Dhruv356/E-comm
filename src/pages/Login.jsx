@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   useEffect(() => {
@@ -32,9 +33,10 @@ const Login = () => {
                     required
                   />
                 </div>
+                <Link to="/">
                 <button type="submit" className="login-btn">
                   Login
-                </button>
+                </button></Link>
               </form>
               <p className="signup-link">
                 Don't have an account? <a href="/signup">Sign Up</a>

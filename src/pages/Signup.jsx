@@ -1,21 +1,34 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 
 const Signup = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [message, setMessage] = useState("");
 
-  // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password !== confirmPassword) {
       setPasswordMatch(false);
     } else {
-      // Proceed with sign-up logic (e.g., sending data to API)
-      setPasswordMatch(true);
-      console.log("Account Created!");
-      // You can redirect to login or home page after successful signup
+      try {
+        // Send user data to the backend
+        const response = await axios.post("http://localhost:5000/api/signup", {
+          fullName,
+          email,
+          password,
+        });
+
+        // Show success message
+        setMessage(response.data.message);
+      } catch (error) {
+        // Show error message
+        setMessage(error.response ? error.response.data.message : "Error signing up");
+      }
     }
   };
 
@@ -29,12 +42,20 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Enter your full name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               required
             />
           </div>
           <div className="form-group">
             <label>Email</label>
-            <input type="email" placeholder="Enter your email" required />
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
           <div className="form-group">
             <label>Password</label>
@@ -63,6 +84,7 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
+        {message && <p>{message}</p>}
         <div className="signup-link">
           <p>
             Already have an account?{" "}
