@@ -43,8 +43,8 @@ const Footer = () => {
               <h2>Contact Us</h2>
               <ul>
                 <li> </li>
-                <li>Email: example@gmail.com</li>
-                <li>Phone: +91-1234567890</li>
+                <li>Email: dhruvdalwadi05@gmai.com</li>
+                <li>Phone: +91-9409584248</li>
               </ul>
             </Col>
           </Row>
