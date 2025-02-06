@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { products } from "./utils/products";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Cart = lazy(() => import("./pages/Cart"));
@@ -34,6 +35,7 @@ function App() {
           <Route path="/product" element={<Product/>}/>
           <Route path="/shop" element={<Shop />} />
           <Route path="/shop/:id" element={<Product />} />
+          <Route path="/profile" element={<Profile/>}/>xxxxxxxxx
           
           <Route path="/login" element={<Login/>}/>
           <Route path="/signup" element={<Signup />} />

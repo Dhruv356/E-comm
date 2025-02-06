@@ -116,9 +116,10 @@ const NavBar = () => {
                 <span className="nav-link-label">product</span>
               </Link>
             </Nav.Item>  */}
+            <SearchBar setFilterList={setFilterList} products={products}/>
 
             <Nav.Item>
-              <SearchBar setFilterList={setFilterList} products={products}/>
+              
               <Link
                 aria-label="Go to Shop Page"
                 className="navbar-link"
@@ -142,7 +143,7 @@ const NavBar = () => {
             <Nav.Item className="expanded-cart">
             <Link
                 aria-label="Go to Cart Page"
-                to="/login"
+                to="/profile"
                
               >
               <svg

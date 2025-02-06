@@ -21,9 +21,9 @@ import phone05 from "../Images/phone-05.jpg";
 import phone06 from "../Images/phone-06.jpg";
 import phone08 from "../Images/phone-08.png";
 
-import watch01 from "../Images/watch-01.jpg";
+import watch01 from "../Images/watch-07.png";
 import watch02 from "../Images/watch-02.jpg";
-import watch03 from "../Images/watch-03.jpg";
+import watch03 from "../Images/smatwatch01.png";
 import watch04 from "../Images/watch-04.jpg";
 
 import wireless01 from "../Images/wireless-01.png";
@@ -36,6 +36,21 @@ import watchSlide from "../Images/watch-07.png";
 import apple from "../Images/airpods_max_pink-removebg-preview.png";
 import logo from"../Images/logo1.png";
 
+import laptop01 from"../Images/laptop01.jpg";
+import laptop02 from"../Images/laptop.png";
+
+
+
+
+import vrheadset01 from"../Images/vr-headset01.jpg";
+import vrheadset02 from"../Images/vr02.png";
+
+// // import laptopImg from "../Images/laptop-01.jpg";
+// import phoneImg from "../Images/phone-01.jpg";
+// // import headphonesImg from "../Images/headphones-01.jpg";
+// import watchImg from "../Images/watch-01.jpg";
+// // import tabletImg from "../Images/tablet-01.jpg";
+// // import cameraImg from "../Images/camera-01.jpg";
 export const logodata=[{
   id:1,
   cover:logo,
@@ -104,7 +119,7 @@ export const discoutProducts = [
     category: "mobile",
     price: 80000,
     shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
+      "hello!",
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
     reviews: [
@@ -126,7 +141,7 @@ export const discoutProducts = [
     productName: "Realme 8",
     imgUrl: phone03,
     category: "mobile",
-    price: 599,
+    price: 60000,
     discount: 10,
     shortDesc:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
@@ -149,7 +164,7 @@ export const discoutProducts = [
     productName: "One Plus Nord",
     imgUrl: phone04,
     category: "mobile",
-    price: 799,
+    price: 79999,
     discount: 5,
     shortDesc:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
@@ -171,260 +186,228 @@ export const discoutProducts = [
 ]
 
 export const products = [
- /*   */
+
 
   {
-    id: "10",
-    productName: "Apple iPhone 12 Pro",
-    imgUrl: phone01,
-    category: "mobile",
-    price: 799,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
+    id: "26",
+    productName: "OMEN Gaming laptop",
+    imgUrl: laptop01,
+    category: "laptop",
+    price: 160000, // Adjusted price
+    shortDesc: "A premium smartphone with a stunning display and advanced camera system.",
+    description: "The Apple iPhone 12 Pro features a Super Retina XDR display, a powerful A14 Bionic chip, and a triple-camera setup that captures stunning photos even in low light. With MagSafe wireless charging and 5G support, it's designed for the future.",
     reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
+      { rating: 4.5, text: "Excellent performance and camera quality!" },
+      { rating: 4.7, text: "Smooth UI and great battery life. Totally worth it." }
     ],
-    avgRating: 4.8,
+    avgRating: 4.6,
   },
-/*   */
   {
-    id: "11",
-    productName: "Apple iPhone 12 Max",
-    imgUrl: phone02,
-    category: "mobile",
-    price: 799,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
+    id: "27",
+    productName: "OMEN Gaming laptop",
+    imgUrl: laptop02,
+    category: "laptop",
+    price: 160000, // Adjusted price
+    shortDesc: "A premium smartphone with a stunning display and advanced camera system.",
+    description: "The Apple iPhone 12 Pro features a Super Retina XDR display, a powerful A14 Bionic chip, and a triple-camera setup that captures stunning photos even in low light. With MagSafe wireless charging and 5G support, it's designed for the future.",
     reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
+      { rating: 4.5, text: "Excellent performance and camera quality!" },
+      { rating: 4.7, text: "Smooth UI and great battery life. Totally worth it." }
     ],
-    avgRating: 4.8,
+    avgRating: 4.6,
   },
+  
+{
+  id: "25",
+  productName: "Meta Quest 3s",
+  imgUrl: vrheadset01,
+  category: "VR-Headset",
+  price: 34599, // Adjusted price
+  shortDesc: "A premium smartphone with a stunning display and advanced camera system.",
+  description: "The Apple iPhone 12 Pro features a Super Retina XDR display, a powerful A14 Bionic chip, and a triple-camera setup that captures stunning photos even in low light. With MagSafe wireless charging and 5G support, it's designed for the future.",
+  reviews: [
+    { rating: 4.5, text: "Excellent performance and camera quality!" },
+    { rating: 4.7, text: "Smooth UI and great battery life. Totally worth it." }
+  ],
+  avgRating: 4.6,
+},{
+    id: "28",
+    productName: "Meta Quest 3s",
+    imgUrl: vrheadset02,
+    category: "VR-Headset",
+    price: 34599, // Adjusted price
+    shortDesc: "A premium smartphone with a stunning display and advanced camera system.",
+    description: "The Apple iPhone 12 Pro features a Super Retina XDR display, a powerful A14 Bionic chip, and a triple-camera setup that captures stunning photos even in low light. With MagSafe wireless charging and 5G support, it's designed for the future.",
+    reviews: [
+      { rating: 4.5, text: "Excellent performance and camera quality!" },
+      { rating: 4.7, text: "Smooth UI and great battery life. Totally worth it." }
+    ],
+    avgRating: 4.6,
+  },
+ {
+  id: "10",
+  productName: "Apple iPhone 12 Pro",
+  imgUrl: phone01,
+  category: "mobile",
+  price: 84999, // Adjusted price
+  shortDesc: "A premium smartphone with a stunning display and advanced camera system.",
+  description: "The Apple iPhone 12 Pro features a Super Retina XDR display, a powerful A14 Bionic chip, and a triple-camera setup that captures stunning photos even in low light. With MagSafe wireless charging and 5G support, it's designed for the future.",
+  reviews: [
+    { rating: 4.5, text: "Excellent performance and camera quality!" },
+    { rating: 4.7, text: "Smooth UI and great battery life. Totally worth it." }
+  ],
+  avgRating: 4.6,
+},
 
-  {
-    id: "12",
-    productName: "Realme 8",
-    imgUrl: phone03,
-    category: "mobile",
-    price: 599,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "11",
+  productName: "Apple iPhone 12 Max",
+  imgUrl: phone02,
+  category: "mobile",
+  price: 89999, // Adjusted price
+  shortDesc: "A powerful phone with an immersive display and robust camera.",
+  description: "The iPhone 12 Max offers a larger screen, making it perfect for entertainment and productivity. With Ceramic Shield protection, A14 Bionic performance, and an advanced dual-camera setup, this phone delivers exceptional quality and reliability.",
+  reviews: [
+    { rating: 4.6, text: "Larger display is a game-changer!" },
+    { rating: 4.8, text: "Feels premium and runs super fast!" }
+  ],
+  avgRating: 4.7,
+},
 
-  {
-    id: "13",
-    productName: "One Plus Nord",
-    imgUrl: phone04,
-    category: "mobile",
-    price: 799,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "12",
+  productName: "Realme 8",
+  imgUrl: phone03,
+  category: "mobile",
+  price: 15999, // Adjusted price
+  shortDesc: "A budget-friendly smartphone with a high-quality display and great battery life.",
+  description: "Realme 8 is equipped with a 6.4-inch AMOLED display, a 64MP quad-camera setup, and a massive 5000mAh battery. It ensures smooth multitasking with the Helio G95 gaming processor.",
+  reviews: [
+    { rating: 4.3, text: "Decent performance at this price range!" },
+    { rating: 4.5, text: "The camera quality exceeded my expectations!" }
+  ],
+  avgRating: 4.4,
+},
 
-  {
-    id: "14",
-    productName: "Apple iPhone 13 Pro",
-    imgUrl: phone05,
-    category: "mobile",
-    price: 899,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "13",
+  productName: "OnePlus Nord",
+  imgUrl: phone04,
+  category: "mobile",
+  price: 29999, // Adjusted price
+  shortDesc: "A mid-range phone with flagship-level features and smooth performance.",
+  description: "OnePlus Nord offers a 90Hz AMOLED display, Snapdragon 765G processor, and a quad-camera setup with 5G support. A great pick for those looking for a premium experience at an affordable price.",
+  reviews: [
+    { rating: 4.7, text: "The OxygenOS experience is fantastic!" },
+    { rating: 4.6, text: "Superb build quality and excellent display." }
+  ],
+  avgRating: 4.65,
+},
 
-  {
-    id: "15",
-    productName: "Samsung Galaxy S22",
-    imgUrl: phone06,
-    category: "mobile",
-    price: 699,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "14",
+  productName: "Apple iPhone 13 Pro",
+  imgUrl: phone05,
+  category: "mobile",
+  price: 114999, // Adjusted price
+  shortDesc: "A flagship smartphone with ProMotion technology and exceptional camera quality.",
+  description: "The iPhone 13 Pro comes with a 120Hz ProMotion display, A15 Bionic chip, and an improved triple-camera system with Cinematic mode. Its battery life is outstanding, making it ideal for power users.",
+  reviews: [
+    { rating: 4.9, text: "Cinematic mode is revolutionary for mobile video!" },
+    { rating: 4.8, text: "Best battery life on any iPhone I've used." }
+  ],
+  avgRating: 4.85,
+},
 
-  {
-    id: "16",
-    productName: "Rolex Watch",
-    imgUrl: watch01,
-    category: "watch",
-    price: 299,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "15",
+  productName: "Samsung Galaxy S22",
+  imgUrl: phone06,
+  category: "mobile",
+  price: 74999, // Adjusted price
+  shortDesc: "A sleek design packed with a powerful processor and an advanced camera.",
+  description: "The Samsung Galaxy S22 features an Exynos 2200 processor, Dynamic AMOLED display, and an impressive camera setup with Nightography for low-light photography. Its premium design makes it stand out.",
+  reviews: [
+    { rating: 4.6, text: "Amazing low-light camera performance!" },
+    { rating: 4.5, text: "The display is crisp and smooth for gaming." }
+  ],
+  avgRating: 4.55,
+},
 
-  {
-    id: "17",
-    productName: "Timex Easy Reader Watch",
-    imgUrl: watch02,
-    category: "watch",
-    price: 299,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "16",
+  productName: "Apple Watch Series 10",
+  imgUrl: watch01,
+  category: "watch",
+  price: 499999, // Adjusted price
+  shortDesc: "An iconic luxury watch with timeless elegance and precision engineering.",
+  description: "The Rolex Oyster Perpetual is a symbol of sophistication, featuring a stainless steel case, automatic movement, and superior craftsmanship. Perfect for those who appreciate high-end timepieces.",
+  reviews: [
+    { rating: 4.9, text: "The craftsmanship is truly top-notch!" },
+    { rating: 5.0, text: "A watch that exudes class and elegance." }
+  ],
+  avgRating: 4.95,
+},
 
-  {
-    id: "18",
-    productName: "Rolex Watch",
-    imgUrl: watch03,
-    category: "watch",
-    price: 299,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "17",
+  productName: "Timex Easy Reader Watch",
+  imgUrl: watch02,
+  category: "watch",
+  price: 6999, // Adjusted price
+  shortDesc: "A classic design with an easy-to-read dial and durable build.",
+  description: "The Timex Easy Reader features an Indiglo night light, leather strap, and quartz movement. Its minimalistic yet stylish design makes it a great everyday watch.",
+  reviews: [
+    { rating: 4.4, text: "Simple yet stylish, great for daily wear!" },
+    { rating: 4.6, text: "The Indiglo feature is super useful at night." }
+  ],
+  avgRating: 4.5,
+},
 
-  {
-    id: "19",
-    productName: "Apple Watch",
-    imgUrl: watch04,
-    category: "watch",
-    price: 399,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "18",
+  productName: "Apple Watch Series 7",
+  imgUrl: watch03,
+  category: "watch",
+  price: 39999, // Adjusted price
+  shortDesc: "A modern smartwatch with advanced health tracking and fitness features.",
+  description: "Apple Watch Series 7 comes with a larger Always-On Retina display, ECG and blood oxygen monitoring, and fitness tracking. It seamlessly integrates with your iPhone for a connected experience.",
+  reviews: [
+    { rating: 4.8, text: "Love the bigger screen and faster charging!" },
+    { rating: 4.7, text: "The fitness tracking is incredibly accurate." }
+  ],
+  avgRating: 4.75,
+},
 
-  {
-    id: "20",
-    productName: "Beat Studio Wireless",
-    imgUrl: wireless01,
-    category: "wireless",
-    price: 199,
-    shortDesc:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio nostrum accusantium iste, voluptas cumque provident! Consequatur officiis animi rem tempore voluptate cumque hic similique aperiam ut consectetur distinctio repudiandae quia quam quos, quas illo, iusto, necessitatibus odio veniam exercitationem quis voluptatibus debitis laboriosam! Esse debitis obcaecati blanditiis at impedit quibusdam!",
-    reviews: [
-      {
-        rating: 4.8,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-      {
-        rating: 4.9,
-        text: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
-      },
-    ],
-    avgRating: 4.8,
-  },
+{
+  id: "19",
+  productName: "Beats Studio Wireless Headphones",
+  imgUrl: wireless01,
+  category: "wireless",
+  price: 19999, // Adjusted price
+  shortDesc: "Premium wireless headphones with noise cancellation and deep bass.",
+  description: "Beats Studio Wireless offers pure adaptive noise cancellation, up to 22 hours of battery life, and an immersive audio experience. Ideal for music lovers and professionals.",
+  reviews: [
+    { rating: 4.5, text: "The bass is deep and punchy, love it!" },
+    { rating: 4.6, text: "Perfect for long travel and work sessions." }
+  ],
+  avgRating: 4.55,
+},
+
+{
+  id: "20",
+  productName: "Sony WH-1000XM4 Headphones",
+  imgUrl: wireless02,
+  category: "wireless",
+  price: 29999, // Adjusted price
+  shortDesc: "Industry-leading noise-canceling headphones with crystal-clear audio.",
+  description: "The Sony WH-1000XM4 headphones offer exceptional sound quality, customizable ANC, and up to 30 hours of battery life. Ideal for audiophiles and frequent travelers.",
+  reviews: [
+    { rating: 4.9, text: "The noise cancellation is out of this world!" },
+    { rating: 5.0, text: "Unmatched sound quality, worth every penny." }
+  ],
+  avgRating: 4.95,
+},
 
   {
     id: "21",
@@ -494,3 +477,4 @@ export const products = [
   },
 
 ];
+

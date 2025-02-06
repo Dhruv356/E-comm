@@ -5,22 +5,25 @@ import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
+
     try {
       const response = await axios.post("http://localhost:5000/api/login", { email, password });
-      localStorage.setItem("authToken", response.data.token); // Save the JWT token
 
-      navigate("/"); // Redirect to the home page after successful login
+      // ✅ Save JWT token to local storage
+      localStorage.setItem("authToken", response.data.token);
+
+      console.log("✅ Login Successful:", response.data.message);
+      navigate("/"); // Redirect to home page
     } catch (err) {
-      setError("Login failed. Please try again.");
+      setError(err.response?.data?.message || "Login failed. Please try again.");
     }
   };
-  
 
   return (
     <div className="login-page">
@@ -51,7 +54,7 @@ const Login = () => {
             Login
           </button>
         </form>
-        {message && <p>{message}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <div className="signup-link">
           <p>
             Don't have an account? <a href="/signup">Sign Up</a>

@@ -15,7 +15,7 @@ const Footer = () => {
             alt="TechTrove Logo"
             style={{ height: "40px", width: "auto" }}
           />
-                  <h1>TrendTrove</h1>
+                  <h1>TechTrove</h1>
               </div>
               <p>TechTrove is your ultimate destination for high-quality electronics and cutting-edge gadgets designed to simplify and enhance your daily life. Our mission is to bring you the latest technology at unbeatable prices, backed by excellent customer service and a seamless shopping experience.</p>
             </Col>
