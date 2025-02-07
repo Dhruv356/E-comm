@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Profile = ({ user, setUser }) => {
+const Profile = ({ user, setUser }) => { // setUser added
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [image, setImage] = useState(null);
@@ -27,6 +27,7 @@ const Profile = ({ user, setUser }) => {
           setPhoneNumber(response.data.phoneNumber || "");
           setShippingAddress(response.data.shippingAddress || "");
           setOrderHistory(response.data.orderHistory || []);
+          setUser(response.data); // Added setUser
         } catch (error) {
           console.error("Error fetching profile", error);
         } finally {
@@ -35,19 +36,21 @@ const Profile = ({ user, setUser }) => {
       }
     };
     fetchProfile();
-  }, [user]);
+  }, [user, setUser]); // Added setUser dependency
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    setUser(null);
-    navigate("/login");
+     // Clear user state on logout
+    navigate("/login"); // Redirect to login page
+    window.location.reload(); // Refresh the page to reflect the logged-out state
   };
-
+  
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
       formData.append("profileImage", file);
+
       try {
         const token = localStorage.getItem("authToken");
         const response = await axios.post("http://localhost:5000/api/upload-profile-image", formData, {
@@ -70,14 +73,29 @@ const Profile = ({ user, setUser }) => {
     try {
       setIsLoading(true);
 
-      // Update the profile using POST request. Make sure the API endpoint is correct.
-      await axios.put("http://localhost:5000/api/update-profile", {  // Changed to PUT request if needed
-        address,
-        phoneNumber,
-        shippingAddress,
-      }, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      if (address !== profile.address) {
+        await axios.post(
+          "http://localhost:5000/api/update-address",
+          { address },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      }
+
+      if (phoneNumber !== profile.phoneNumber) {
+        await axios.post(
+          "http://localhost:5000/api/update-phone-number",
+          { phoneNumber },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      }
+
+      if (shippingAddress !== profile.shippingAddress) {
+        await axios.post(
+          "http://localhost:5000/api/update-shipping-address",
+          { shippingAddress },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+      }
 
       alert("Profile updated successfully!");
     } catch (error) {
@@ -104,33 +122,54 @@ const Profile = ({ user, setUser }) => {
                 )}
               </div>
               <div className="profile-info">
-                <h2>{profile?.name}</h2>
-                <p>{profile?.email}</p>
+                <h2>{profile.name}</h2>
+                <p>{profile.email}</p>
               </div>
-
-              <label className="upload-btn">
-                Upload Image
-                <input type="file" onChange={handleImageUpload} />
-              </label>
+              <div className="upload-btn-container">
+                <label className="upload-btn">
+                  Select Image
+                  <input type="file" onChange={handleImageUpload} />
+                </label>
+              </div>
             </div>
 
             <div className="profile-edit-form">
               <div className="form-group">
-                <label>Delivery Address</label>
-                <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+                <label htmlFor="address">Delivery Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Enter delivery address"
+                />
               </div>
 
               <div className="form-group">
-                <label>Phone Number</label>
-                <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                <label htmlFor="phone">Phone Number</label>
+                <input
+                  type="text"
+                  id="phone"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter your phone number"
+                />
               </div>
 
               <div className="form-group">
-                <label>Shipping Address</label>
-                <input type="text" value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} />
+                <label htmlFor="shipping">Shipping Address</label>
+                <input
+                  type="text"
+                  id="shipping"
+                  value={shippingAddress}
+                  onChange={(e) => setShippingAddress(e.target.value)}
+                  placeholder="Enter your shipping address"
+                />
               </div>
 
-              <button className="submit-btn" onClick={handleSaveChanges}>Save Changes</button>
+              <button className="submit-btn" onClick={handleSaveChanges}>
+                Save Changes
+              </button>
             </div>
 
             <div className="order-history-section">
@@ -138,7 +177,9 @@ const Profile = ({ user, setUser }) => {
               {orderHistory.length > 0 ? (
                 <ul>
                   {orderHistory.map((order, index) => (
-                    <li key={index}>Order #{order.id} - {order.date} - {order.status}</li>
+                    <li key={index}>
+                      Order #{order.id} - {order.date} - {order.status}
+                    </li>
                   ))}
                 </ul>
               ) : (
@@ -146,7 +187,9 @@ const Profile = ({ user, setUser }) => {
               )}
             </div>
 
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
           </>
         ) : (
           <p className="login-prompt">

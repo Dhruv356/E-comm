@@ -17,7 +17,7 @@ import phone01 from "../Images/phone-01.jpg";
 import phone02 from "../Images/phone-02.jpg";
 import phone03 from "../Images/phone-03.png";
 import phone04 from "../Images/phone-04.jpg";
-import phone05 from "../Images/phone-05.jpg";
+import phone05 from "../Images/phone09.png";
 import phone06 from "../Images/phone-06.jpg";
 import phone08 from "../Images/phone-08.png";
 

@@ -1,49 +1,75 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import axios from "axios";
+import "../pages/Signup.css"
 
 const Signup = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [message, setMessage] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
-      setPasswordMatch(false);
-    } else {
-      try {
-        // Send user data to the backend
-        const response = await axios.post("http://localhost:5000/api/signup", {
-          fullName,
-          email,
-          password,
-        });
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
-        // Show success message
-        setMessage(response.data.message);
-      } catch (error) {
-        // Show error message
-        setMessage(error.response ? error.response.data.message : "Error signing up");
-      }
+    try {
+      const response = await axios.post("http://localhost:5000/api/signup", formData);
+
+      // Save JWT token to localStorage upon successful signup
+      localStorage.setItem("authToken", response.data.token);
+
+      setSuccess("Signup successful! Redirecting to login...");
+      setError("");
+
+      // Clear form data
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // Redirect to login page after 2 seconds
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+      
+    } catch (err) {
+      setError("Error during signup. Please try again.");
     }
   };
 
   return (
-    <div className="login-page">
-      <div className="login-form">
-        <h2>Sign Up</h2>
+    <div className="signup-container">
+      <div className="signup-box">
+        <h2>Create an Account</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Full Name</label>
+            <label>Name</label>
             <input
-              type="input"
-              placeholder="Enter your full name"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               required
             />
           </div>
@@ -51,9 +77,9 @@ const Signup = () => {
             <label>Email</label>
             <input
               type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               required
             />
           </div>
@@ -61,9 +87,9 @@ const Signup = () => {
             <label>Password</label>
             <input
               type="password"
-              placeholder="Create a password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>
@@ -71,27 +97,21 @@ const Signup = () => {
             <label>Confirm Password</label>
             <input
               type="password"
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
               required
             />
-            {!passwordMatch && (
-              <span className="error-message">Passwords do not match</span>
-            )}
           </div>
-          <button type="submit" className="login-btn">
-            Sign Up
-          </button>
+          {error && <p className="error-message">{error}</p>}
+          {success && <p className="success-message">{success}</p>}
+          <button type="submit" className="signup-btn">Sign Up</button>
         </form>
-        {message && <p>{message}</p>}
         <div className="signup-link">
-          <p>
-            Already have an account?{" "}
-            <a href="/login">Login</a>
-          </p>
+          <p>Already have an account? <a href="/login">Login</a></p>
         </div>
       </div>
+     
     </div>
   );
 };

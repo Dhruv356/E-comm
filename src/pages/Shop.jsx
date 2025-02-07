@@ -4,7 +4,8 @@ import ShopList from "../components/ShopList";  // Component to list products
 import Banner from "../components/Banner/Banner";  // Banner component
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop";  // Custom hook
 import "../index.css"; // Import custom CSS
-import all from"../Images/download.jpeg";
+import all from"../Images/all.jpg";
+
 const Shop = () => {
   const [filterList, setFilterList] = useState(products);
   const [activeCategory, setActiveCategory] = useState("All");
@@ -21,7 +22,8 @@ const Shop = () => {
   });
 
   // Default category image for "All"
-  const defaultCategoryImage = {all} // Change this to any relevant default image
+  const defaultCategoryImage = "../Images/all.jpg";
+ // The image path inside public folder
 
   // Scroll to top on page load
   useWindowScrollToTop();

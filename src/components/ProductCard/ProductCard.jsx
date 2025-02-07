@@ -46,7 +46,7 @@ const ProductCard = ({ title, productItem }) => {
             className="add"
             onClick={() => handelAdd(productItem)}
           >
-            <ion-icon name="add"></ion-icon>
+            <ion-icon name="cart"></ion-icon>
           </button>
         </div>
       </div>
