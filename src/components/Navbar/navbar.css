@@ -1,11 +1,12 @@
-/* Navbar Section  */
+/* Navbar Section */
 .navbar {
   position: relative !important;
-  background-color: white;
-  transition: all 0.3s ease-out 0s !important;
-  box-shadow: 0px 10px 10px 0px rgba(9, 5, 29, 0.171) !important;
+  background-color:#222831 !important; /* Primary Background - Deep Black */
+  transition: all 0.3s ease-out !important;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3) !important;
   font-size: 1.2rem !important;
 }
+
 
 .navbar.fixed {
   position: fixed !important;
@@ -97,7 +98,7 @@
   font-style: oblique;
   font-size: 25px;
   font-weight: 500;
-  color: black;
+  color: rgb(255, 248, 248);
   margin: 0;
 }
 
@@ -112,7 +113,7 @@
 }
 
 .nav-link-label {
-  color: black;
+  color: rgb(255, 255, 255);
   font-size: 18px !important;
   font-weight: 600;
 }
@@ -124,6 +125,7 @@
 }
 
 .cart {
+  color: white;
   position: relative !important;
   z-index: 3;
 }
@@ -133,7 +135,7 @@
   position: absolute;
   right: 0;
   top: -5px;
-  background-color: #0f3460;
+  background-color:  #f80404;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -197,4 +199,92 @@
     gap: 5px;
   }
   
+}
+
+.navbar-nav .nav-item:hover {
+  transform: translateY(-3px);
+}
+
+.navbar-nav .nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 3px;
+  background: #f80404;
+  transition: width 0.4s ease-in-out, left 0.4s ease-in-out;
+}
+
+.navbar-nav .nav-item:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Navbar Toggle (Hamburger) Animation */
+.navbar-toggler {
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-toggler:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+/* Smooth Icon Animation */
+.navbar-brand ion-icon {
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar-brand ion-icon:hover {
+  transform: rotate(360deg) scale(1.2);
+}
+
+/* Glow Effect on Logo Hover */
+.logo {
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-link-label:hover {
+  text-shadow: 0px 0px 10px #00E6FF, 0px 0px 20px #007BFF;
+  transform: scale(1.1);
+}
+
+/* Navbar Dropdown - Smooth Fade & Slide */
+.dropdown-menu {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease-in-out;
+  display: block;
+  visibility: hidden;
+}
+
+.nav-item:hover .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+/* Cart Badge - Pulse & Bounce */
+.cart::before {
+  animation: pulse 1.5s infinite alternate ease-in-out, bounce 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "../pages/Signup.css"
+import "../pages/Signup.css";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -9,11 +9,12 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "user", // Default role set to "user"
   });
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,28 +34,15 @@ const Signup = () => {
 
     try {
       const response = await axios.post("http://localhost:5000/api/signup", formData);
-
-      // Save JWT token to localStorage upon successful signup
       localStorage.setItem("authToken", response.data.token);
-
       setSuccess("Signup successful! Redirecting to login...");
       setError("");
 
-      // Clear form data
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-
-      // Redirect to login page after 2 seconds
       setTimeout(() => {
         navigate("/login");
       }, 2000);
-      
     } catch (err) {
-      setError("Error during signup. Please try again.");
+      setError(err.response?.data?.message || "Error during signup. Please try again.");
     }
   };
 
@@ -65,43 +53,26 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Confirm Password</label>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
+            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+          </div>
+          <div className="dropdown">
+            <label>Select Role</label>
+            <select name="role" value={formData.role} onChange={handleChange}>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           {error && <p className="error-message">{error}</p>}
           {success && <p className="success-message">{success}</p>}
@@ -111,7 +82,6 @@ const Signup = () => {
           <p>Already have an account? <a href="/login">Login</a></p>
         </div>
       </div>
-     
     </div>
   );
 };

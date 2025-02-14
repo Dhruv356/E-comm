@@ -30,6 +30,7 @@ import wireless01 from "../Images/wireless-01.png";
 import wireless02 from "../Images/wireless-02.png";
 import wireless03 from "../Images/wireless-03.png";
 import wireless04 from "../Images/wireless-04.png";
+import wireless05 from "../Images/wireless05.png";
 
 import sofaSlide from "../Images/hero-img.png";
 import watchSlide from "../Images/watch-07.png";
@@ -453,6 +454,22 @@ export const products = [
     ],
     avgRating: 4.8,
   },
+  {
+    id: "29",
+    productName: "Vizus Smart Glasses",
+    imgUrl: wireless05, 
+    category: "wireless",
+    price: 19999, 
+    shortDesc: "Revolutionary smart glasses with AR display and voice control.",
+    description: "Vizus Smart Glasses combine cutting-edge augmented reality with sleek design. Featuring real-time navigation, voice assistant integration, and hands-free notifications, they redefine smart wearables for professionals and tech enthusiasts alike.",
+    reviews: [
+      { rating: 4.7, text: "The AR display is futuristic and super useful!" },
+      { rating: 4.9, text: "Great design, comfortable to wear, and packed with smart features." }
+    ],
+    avgRating: 4.8
+},
+
+  
   {
     id: "23",
     productName: "Bluetooth Headphones",

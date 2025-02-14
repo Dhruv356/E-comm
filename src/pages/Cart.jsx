@@ -1,15 +1,19 @@
 import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {
   addToCart,
   decreaseQty,
   deleteProduct,
 } from "../app/features/cart/cartSlice";
 
+
+
 const Cart = () => {
   const { cartList } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate(); // ✅ Add navigation
   // middlware to localStorage
   const totalPrice = cartList.reduce(
     (price, item) => price + item.qty * item.price,
@@ -22,6 +26,14 @@ const Cart = () => {
     //   setCartItem(JSON.parse(storedCart));
     // }
   }, []);
+
+  const handleCheckout = () => {
+    if (cartList.length === 0) {
+      alert("Your cart is empty! Add products before checkout.");
+      return;
+    }
+    navigate("/checkout", { state: { cartList, totalPrice } });
+  };
   return (
     <section className="cart-items">
       <Container>
@@ -85,7 +97,7 @@ const Cart = () => {
               <div className=" d_flex">
                 <h4>Total Price:</h4>
                 <h3>₹&nbsp;{totalPrice}.00</h3>
-                <button className="check-out-btn">Check-Out</button>
+                <button className="check-out-btn" onClick={handleCheckout}>Check-Out</button>
               </div>
             </div>
           </Col>

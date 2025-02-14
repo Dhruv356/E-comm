@@ -1,29 +1,38 @@
 import { useState, Fragment } from "react";
-import { products } from "../utils/products";  // Import product list
-import ShopList from "../components/ShopList";  // Component to list products
-import Banner from "../components/Banner/Banner";  // Banner component
-import useWindowScrollToTop from "../hooks/useWindowScrollToTop";  // Custom hook
+import { products } from "../utils/products"; // Import product list
+import ShopList from "../components/ShopList"; // Component to list products
+import Banner from "../components/Banner/Banner"; // Banner component
+import useWindowScrollToTop from "../hooks/useWindowScrollToTop"; // Custom hook
 import "../index.css"; // Import custom CSS
-import all from"../Images/all.jpg";
+import all from "../Images/all.jpg"; // Default image for "All" category
 
 const Shop = () => {
   const [filterList, setFilterList] = useState(products);
   const [activeCategory, setActiveCategory] = useState("All");
 
-  // Extract unique categories and assign images dynamically
-  const categories = ["All", ...new Set(products.map((product) => product.category))];
+  // Extract unique categories and validate them
+  const categories = [
+    "All",
+    ...new Set(
+      products
+        .map((product) => (typeof product.category === "string" ? product.category : "Unknown")) // Validate category
+    ),
+  ];
 
-  // Assign an image to each category (uses the first product image from that category)
+  // Assign images to categories dynamically, ensuring valid `imgUrl`
   const categoryImages = {};
   products.forEach((product) => {
-    if (!categoryImages[product.category]) {
-      categoryImages[product.category] = product.imgUrl;  // Fix: Use imgUrl instead of image
+    if (
+      !categoryImages[product.category] && // Check if not already assigned
+      typeof product.imgUrl === "string" && // Validate `imgUrl` is a string
+      product.imgUrl.trim() !== "" // Ensure `imgUrl` is not empty
+    ) {
+      categoryImages[product.category] = product.imgUrl;
     }
   });
 
   // Default category image for "All"
-  const defaultCategoryImage = "../Images/all.jpg";
- // The image path inside public folder
+  const defaultCategoryImage = all;
 
   // Scroll to top on page load
   useWindowScrollToTop();
@@ -31,14 +40,18 @@ const Shop = () => {
   // Filter products by category
   const filterByCategory = (category) => {
     setActiveCategory(category);
-    setFilterList(category === "All" ? products : products.filter((item) => item.category === category));
+    setFilterList(
+      category === "All"
+        ? products
+        : products.filter((item) => item.category === category)
+    );
   };
 
   return (
     <Fragment>
       <Banner title="Products" />
-      
-      {/* Category Cards Section */}
+
+      {/* {/ Category Cards Section /} */}
       <section className="category-section">
         <h2 className="section-title">Browse by Category</h2>
         <div className="category-container">
@@ -49,7 +62,11 @@ const Shop = () => {
               onClick={() => filterByCategory(category)}
             >
               <img
-                src={category === "All" ? defaultCategoryImage : categoryImages[category] || defaultCategoryImage}
+                src={
+                  category === "All"
+                    ? defaultCategoryImage
+                    : categoryImages[category] || defaultCategoryImage
+                }
                 alt={category}
                 className="category-image"
               />
@@ -59,7 +76,7 @@ const Shop = () => {
         </div>
       </section>
 
-      {/* Product List */}
+      {/* {/ Product List /} */}
       <section className="products-section">
         <ShopList productItems={filterList} />
       </section>

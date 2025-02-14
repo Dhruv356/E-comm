@@ -1,23 +1,37 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Import the useNavigate hook
-import "../index.css"
+import { useNavigate } from "react-router-dom";
+import "../index.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Create the navigate function
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Reset error before new request
+
     try {
-      const response = await axios.post("http://localhost:5000/api/login", { email, password });
-      localStorage.setItem("authToken", response.data.token); // Save the JWT token
+      const response = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+        role,
+      });
+
+      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("userRole", role);
+
       alert("Login successful!");
-      navigate("/"); // Redirect to home page after successful login (change the path as needed)
+      navigate("/");
     } catch (err) {
-      setError("Login failed. Please try again.");
+      if (!err.response) {
+        setError("Server is unreachable. Please check backend connection.");
+      } else {
+        setError(err.response.data.message || "Login failed. Please try again.");
+      }
     }
   };
 
@@ -25,8 +39,15 @@ const Login = () => {
     <div className="login-page">
       <div className="login-form">
         <h2>Login</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <form onSubmit={handleSubmit}>
+          <div className="dropdown">
+            <label>Select Role</label>
+            <select value={role} onChange={(e) => setRole(e.target.value)}>
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
           <div className="form-group">
             <label>Email</label>
             <input
@@ -55,8 +76,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-
-     
     </div>
   );
 };
