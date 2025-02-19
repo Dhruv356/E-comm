@@ -1,23 +1,30 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./searchbar.css";
-import { products } from "../../utils/products";
-// import useDebounce from "../../hooks/useDebounce";
-const SearchBar = ({ setFilterList }) => {
-  const [searchWord, setSearchWord] = useState(null);
-  // const debounceSearchWord = useDebounce(searchWord, 300);
-  const handelChange = (input) => {
-    setSearchWord(input.target.value);
-    setFilterList(
-      products.filter((item) =>
-        item.productName?.toLowerCase().includes(searchWord?.toLowerCase())
-      )
-    );
+
+const SearchBar = () => {
+  const [searchWord, setSearchWord] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    if (searchWord.trim()) {
+      navigate(`/shop?search=${encodeURIComponent(searchWord)}`);
+    }
   };
+
   return (
-    <div className="search-container">
-      <input type="text" placeholder="Search..." onChange={handelChange} />
-      <ion-icon name="search-outline" className="search-icon"></ion-icon>
-    </div>
+    <form className="search-container" onSubmit={handleSearch}>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchWord}
+        onChange={(e) => setSearchWord(e.target.value)}
+      />
+      <button type="submit">
+        <ion-icon name="search-outline" className="search-icon"></ion-icon>
+      </button>
+    </form>
   );
 };
 

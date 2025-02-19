@@ -15,6 +15,7 @@ import { FaUsers, FaBoxOpen, FaChartBar, FaBars, FaTimes } from "react-icons/fa"
 import "../Admin/admin.css";
 import { Manageuser } from "../Admin/Manageuser";
 import { ManageProduct } from "../Admin/ManageProduct";
+import ProductList from "./Productlist";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -59,6 +60,11 @@ const AdminDashboard = () => {
                 <FaBoxOpen /> Manage Products
               </Link>
             </li>
+            <li>
+              <Link to="/admin/product-list" className="nav-link" onClick={() => setIsOpen(false)}>
+                <FaBars /> Product List  
+              </Link>
+            </li>
           </ul>
         </nav>
       </aside>
@@ -75,6 +81,7 @@ const AdminDashboard = () => {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="manage-users" element={<Manageuser />} />
             <Route path="manage-products" element={<ManageProduct />} />
+            <Route path="product-list" element={<ProductList />} />
           </Routes>
         </div>
       </div>

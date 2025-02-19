@@ -1,21 +1,36 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { products } from "../utils/products"; // Import product list
 import ShopList from "../components/ShopList"; // Component to list products
 import Banner from "../components/Banner/Banner"; // Banner component
 import useWindowScrollToTop from "../hooks/useWindowScrollToTop"; // Custom hook
 import "../index.css"; // Import custom CSS
 import all from "../Images/all.jpg"; // Default image for "All" category
+import { useLocation } from "react-router-dom";
 
 const Shop = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get("search")?.toLowerCase() || "";
   const [filterList, setFilterList] = useState(products);
   const [activeCategory, setActiveCategory] = useState("All");
-
+  useEffect(() => {
+    if (searchQuery) {
+      const searchedProducts = products.filter((item) =>
+        item.productName?.toLowerCase().includes(searchQuery)
+      );
+      setFilterList(searchedProducts);
+      setActiveCategory("All"); // Reset category if searching
+    } else {
+      setFilterList(products);
+    }
+  }, [searchQuery]);
   // Extract unique categories and validate them
   const categories = [
     "All",
     ...new Set(
-      products
-        .map((product) => (typeof product.category === "string" ? product.category : "Unknown")) // Validate category
+      products.map((product) =>
+        typeof product.category === "string" ? product.category : "Unknown"
+      ) // Validate category
     ),
   ];
 
@@ -58,7 +73,9 @@ const Shop = () => {
           {categories.map((category) => (
             <div
               key={category}
-              className={`category-card ${activeCategory === category ? "active" : ""}`}
+              className={`category-card ${
+                activeCategory === category ? "active" : ""
+              }`}
               onClick={() => filterByCategory(category)}
             >
               <img

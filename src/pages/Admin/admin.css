@@ -346,3 +346,80 @@
 .delete-button:hover {
   background-color: #a71d2a;
 }
+
+
+/* ProductList.css */
+.product-list-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  text-align: center;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  color: white;
+}
+
+h1 {
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+.no-products {
+  color: #ccc;
+  font-size: 18px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #000000;
+
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-table th,
+.product-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #010000;
+}
+
+.product-table th {
+  background: #222831;
+  color: #ffffff;
+}
+
+
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin: 5px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.edit-btn {
+  background: #F84040;
+  color: white;
+}
+
+.delete-btn {
+  background: #D32F2F;
+  color: white;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  opacity: 0.8;
+}
