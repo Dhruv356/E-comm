@@ -13,6 +13,7 @@ const NavBar = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const { cartList } = useSelector((state) => state.cart);
   const [expand, setExpand] = useState(false);
+  const [userRole, setUserRole] = useState(localStorage.getItem("userRole") || "");
   const [isFixed, setIsFixed] = useState(false);
   // fixed Header
   function scrollHandler() {
@@ -32,8 +33,18 @@ const NavBar = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    navigate("/login");
+    localStorage.removeItem("userRole"); // Remove user role too
+  
+    navigate("/login", { replace: true }); // Redirect & clear history
+    window.location.reload(); // Refresh the page
   };
+  
+
+  useEffect(() => {
+    const role = localStorage.getItem("userRole");
+    setUserRole(role);
+  }, []);
+  
   return (
     <Navbar
       fixed="top"
@@ -54,7 +65,7 @@ const NavBar = () => {
             to="/"
             onClick={() => setExpand(false)}
           >
-            <span className="nav-link-label">TechTrove</span>
+          <span className="nav-link-label"><h2>TechTrove</h2></span>
           </Link>
         </Navbar.Brand>
         {/* Media cart and toggle */}
@@ -136,17 +147,14 @@ const NavBar = () => {
             </Nav.Item>
 
            
-            <Nav.Item>
-              <Link
-                aria-label="Go adminpanel"
-                className="navbar-link"
-                to="/admin"
-                onClick={() => setExpand(false)}
-              >
-                <span className="nav-link-label">Admin</span>
-              </Link>
-            </Nav.Item>
-             
+            {userRole === "admin" && (
+              <Nav.Item>
+                <Link className="navbar-link" to="/admin/dashboard" onClick={() => setExpand(false)}>
+                  <span className="nav-link-label">Admin</span>
+                </Link>
+              </Nav.Item>
+            )}
+
            <Nav.Item>
               
               <Link
@@ -190,8 +198,8 @@ const NavBar = () => {
                   <Dropdown.Item as={Link} to="/profile">
                     Profile
                   </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/orders">
-                    Orders
+                  <Dropdown.Item as={Link} to="/Myorders">
+                    My Orders
                   </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>
                     Logout

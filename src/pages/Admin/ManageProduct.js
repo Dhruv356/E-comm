@@ -6,11 +6,12 @@ export const ManageProduct = () => {
   const [productName, setProductName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [category, setCategory] = useState(""); // New state for category
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!productName || !price || !description) {
+    if (!productName || !price || !description || !category) {
       alert("Please fill in all fields.");
       return;
     }
@@ -19,14 +20,14 @@ export const ManageProduct = () => {
     productData.append("productName", productName);
     productData.append("description", description);
     productData.append("price", price);
+    productData.append("category", category); // Append category to form data
     if (file) {
       productData.append("file", file);
     }
 
     try {
-    
       const response = await axios.post(
-        "http://localhost:5000/api/products", // REMOVE "/add"
+        "http://localhost:5000/api/products",
         productData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -40,6 +41,7 @@ export const ManageProduct = () => {
       setProductName("");
       setDescription("");
       setPrice("");
+      setCategory(""); // Clear category
       setFile(null);
     } catch (error) {
       console.error("Error adding product:", error);
@@ -94,7 +96,23 @@ export const ManageProduct = () => {
             />
           </div>
 
-          <button type="submit">Add Product</button>
+          <div className="form-group">
+            <label>Category:</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              required
+            >
+              <option value="">Select category</option>
+              <option value="mobile">Mobile</option>
+              <option value="laptop">Laptop</option>
+              <option value="VR-Headset">VR Headset</option>
+              <option value="watch">Watch</option>
+              <option value="wireless">Wireless</option>
+            </select>
+          </div>
+
+          <button type="submit" className="addproduct-button">Add Product</button>
         </form>
       </div>
     </div>

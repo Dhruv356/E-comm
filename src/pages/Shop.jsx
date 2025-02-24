@@ -1,64 +1,83 @@
-import { useState, Fragment, useEffect } from "react";
-import { products } from "../utils/products"; // Import product list
-import ShopList from "../components/ShopList"; // Component to list products
-import Banner from "../components/Banner/Banner"; // Banner component
-import useWindowScrollToTop from "../hooks/useWindowScrollToTop"; // Custom hook
-import "../index.css"; // Import custom CSS
-import all from "../Images/all.jpg"; // Default image for "All" category
+import { useState, useEffect, Fragment } from "react";
+import { products as staticProducts } from "../utils/products"; // Static product list
+import ShopList from "../components/ShopList";
+import Banner from "../components/Banner/Banner";
+import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
+import "../index.css";
+import all from "../Images/all.jpg";
 import { useLocation } from "react-router-dom";
 
 const Shop = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const searchQuery = searchParams.get("search")?.toLowerCase() || "";
-  const [filterList, setFilterList] = useState(products);
+
+  const [allProducts, setAllProducts] = useState(staticProducts);
+  const [filterList, setFilterList] = useState(staticProducts);
   const [activeCategory, setActiveCategory] = useState("All");
+
+  useWindowScrollToTop();
+
+  // Fetch products from backend
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/products"); // Adjust URL as needed
+        if (!response.ok) throw new Error("Failed to fetch products");
+
+        const data = await response.json();
+        const mergedProducts = [...staticProducts, ...data];
+
+        setAllProducts(mergedProducts);
+        setFilterList(mergedProducts);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setAllProducts(staticProducts); // Ensure static products are displayed
+        setFilterList(staticProducts);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Handle search functionality
   useEffect(() => {
     if (searchQuery) {
-      const searchedProducts = products.filter((item) =>
+      const searchedProducts = allProducts.filter((item) =>
         item.productName?.toLowerCase().includes(searchQuery)
       );
       setFilterList(searchedProducts);
-      setActiveCategory("All"); // Reset category if searching
+      setActiveCategory("All");
     } else {
-      setFilterList(products);
+      setFilterList(allProducts);
     }
-  }, [searchQuery]);
-  // Extract unique categories and validate them
+  }, [searchQuery, allProducts]);
+
+  // Generate categories based on available products
   const categories = [
     "All",
     ...new Set(
-      products.map((product) =>
+      (allProducts.length ? allProducts : staticProducts).map((product) =>
         typeof product.category === "string" ? product.category : "Unknown"
-      ) // Validate category
+      )
     ),
   ];
 
-  // Assign images to categories dynamically, ensuring valid `imgUrl`
+  // Map categories to images
   const categoryImages = {};
-  products.forEach((product) => {
-    if (
-      !categoryImages[product.category] && // Check if not already assigned
-      typeof product.imgUrl === "string" && // Validate `imgUrl` is a string
-      product.imgUrl.trim() !== "" // Ensure `imgUrl` is not empty
-    ) {
+  (allProducts.length ? allProducts : staticProducts).forEach((product) => {
+    if (!categoryImages[product.category] && product.imgUrl?.trim()) {
       categoryImages[product.category] = product.imgUrl;
     }
   });
 
-  // Default category image for "All"
-  const defaultCategoryImage = all;
-
-  // Scroll to top on page load
-  useWindowScrollToTop();
-
-  // Filter products by category
+  // Handle category filtering
   const filterByCategory = (category) => {
     setActiveCategory(category);
     setFilterList(
       category === "All"
-        ? products
-        : products.filter((item) => item.category === category)
+        ? allProducts
+        : allProducts.filter((item) => item.category === category)
     );
   };
 
@@ -66,24 +85,18 @@ const Shop = () => {
     <Fragment>
       <Banner title="Products" />
 
-      {/* {/ Category Cards Section /} */}
+      {/* Category Cards */}
       <section className="category-section">
         <h2 className="section-title">Browse by Category</h2>
         <div className="category-container">
           {categories.map((category) => (
             <div
               key={category}
-              className={`category-card ${
-                activeCategory === category ? "active" : ""
-              }`}
+              className={`category-card ${activeCategory === category ? "active" : ""}`}
               onClick={() => filterByCategory(category)}
             >
               <img
-                src={
-                  category === "All"
-                    ? defaultCategoryImage
-                    : categoryImages[category] || defaultCategoryImage
-                }
+                src={categoryImages[category] || all}
                 alt={category}
                 className="category-image"
               />
@@ -93,7 +106,7 @@ const Shop = () => {
         </div>
       </section>
 
-      {/* {/ Product List /} */}
+      {/* Product List */}
       <section className="products-section">
         <ShopList productItems={filterList} />
       </section>

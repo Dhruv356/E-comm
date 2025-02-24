@@ -9,7 +9,7 @@
 
 /* Individual Checkout Form & Order Summary Containers */
 .checkout-container {
-    width: 400px; /* Fixed width for each section */
+    width: 700px; /* Fixed width for each section */
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);

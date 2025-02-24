@@ -23,9 +23,11 @@ const Login = () => {
 
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("userRole", role);
+      
 
       alert("Login successful!");
       navigate("/");
+      window.location.reload(); // Refresh the page
     } catch (err) {
       if (!err.response) {
         setError("Server is unreachable. Please check backend connection.");

@@ -41,6 +41,7 @@ const ProductList = () => {
                             <th>Image</th>
                             <th>Product Name</th>
                             <th>Description</th>
+                            <th>category</th>
                             <th>Price</th>
                             <th>Actions</th>
                         </tr>
@@ -53,7 +54,9 @@ const ProductList = () => {
                                 </td>
                                 <td>{product.productName}</td>
                                 <td>{product.description}</td>
-                                <td>${product.price}</td>
+                                <td>{product.category}</td> 
+                                <td>₹{product.price}</td>
+                            
                                 <td>
                                     <button className="edit-btn">Edit</button>
                                     <button className="delete-btn" onClick={() => handleDelete(product._id)}>Delete</button>

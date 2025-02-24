@@ -98,4 +98,142 @@
   .submit-btn:active, .logout-btn:active {
     transform: scale(0.98);
   }
-  
+  /* Page background */
+.my-orders-container {
+  background-color: #222831;
+  min-height: 100vh;
+  padding: 24px;
+  color: white;
+}
+
+/* Page title */
+.my-orders-title {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  color: #f84040;
+  margin-bottom: 24px;
+}
+
+/* Order card */
+.order-card {
+  background-color: #333943;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #4e4e4e;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+
+
+/* Order header */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #555;
+  padding-bottom: 12px;
+}
+
+/* Order ID */
+.order-id {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Order status */
+.order-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* Status colors */
+.status-delivered {
+  background-color: green;
+  color: white;
+}
+
+.status-pending {
+  background-color: yellow;
+  color: black;
+}
+
+.status-shipped {
+  background-color: blue;
+  color: white;
+}
+
+/* Order details */
+.order-details {
+  margin-top: 12px;
+  color: #bbb;
+}
+
+/* Order total */
+.order-total {
+  font-size: 20px;
+  font-weight: bold;
+  color: #f84040;
+}
+
+/* Product container */
+.product-container {
+  display: flex;
+  align-items: center;
+  background-color: #444;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+}
+
+/* Product image */
+.product-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  border: 1px solid #666;
+  object-fit: cover;
+}
+
+/* Product name */
+.product-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 12px;
+}
+
+/* Buttons */
+.order-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.order-btn {
+  width: 48%;
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 8px;
+  border: 1px solid #666;
+  cursor: pointer;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.order-btn:hover {
+  opacity: 0.9;
+}
+
+.view-details-btn {
+  background: linear-gradient(to right, #4f46e5, #9333ea);
+  color: white;
+}
+
+.cancel-btn {
+  background: linear-gradient(to right, #ef4444, #ec4899);
+  color: white;
+}

@@ -14,7 +14,7 @@ const SlideCard = ({ title, desc, cover }) => {
 
           {/* Button Navigates to Shop Page */}
           <button className="shop-btn" onClick={() => navigate("/shop")}>
-            Visit Collections
+            Explore More
           </button>
         </Col>
         <Col md={6}>

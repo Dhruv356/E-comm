@@ -25,15 +25,37 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    const userRole = localStorage.getItem("userRole");
-
-    if (!token || userRole !== "admin") {
-      alert("Access Denied: Admins only!");
-      navigate("/"); // Redirect non-admin users to homepage
-    }
+    const verifyAdmin = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+  
+        if (!token) {
+          throw new Error("No token found");
+        }
+  
+        const response = await fetch("http://localhost:5000/api/auth/verify-admin", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+  
+        const data = await response.json();
+  
+        if (!response.ok || data.role !== "admin") {
+          throw new Error("Unauthorized access");
+        }
+      } catch (error) {
+        alert("Access Denied: Admins only!");
+        localStorage.removeItem("authToken"); // Remove invalid token
+        localStorage.removeItem("userRole");
+        navigate("/"); // Redirect to homepage
+      }
+    };
+  
+    verifyAdmin();
   }, [navigate]);
-
+  
   return (
     <div className="admin-container">
       {/* Sidebar */}
@@ -65,6 +87,8 @@ const AdminDashboard = () => {
                 <FaBars /> Product List  
               </Link>
             </li>
+            
+            
           </ul>
         </nav>
       </aside>

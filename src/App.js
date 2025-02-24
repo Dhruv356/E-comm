@@ -11,6 +11,8 @@ import Signup from "./pages/Signup";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import Checkout from "./pages/Checkout";
+import MyOrders from "./pages/Myorder";
+import ProductDetails from "./components/ProductDetails/ProductDetails";
 
 const Home = lazy(() => import("./pages/Home"));
 const Shop = lazy(() => import("./pages/Shop"));
@@ -33,6 +35,8 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout/>}/>
+          <Route path="/product/:id" element={<ProductDetails />} /> {/* Ensure this matches */}
+          <Route path="/myorders" element={<MyOrders/>}/>
 
           {/* Admin Routes */}
           <Route path="/admin/*" element={<AdminDashboard />} />

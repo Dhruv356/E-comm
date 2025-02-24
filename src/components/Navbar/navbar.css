@@ -119,7 +119,13 @@
 
 .nav-link-label {
   color: rgb(255, 255, 255);
-  font-size: 18px;
+  font-size: 19px;
+  font-weight: 600;
+}
+.nav-link-label h2 {
+  margin-top: 15px;
+  color: rgb(255, 255, 255);
+  font-size: 22px;
   font-weight: 600;
 }
 
