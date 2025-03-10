@@ -1,239 +1,111 @@
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .profile-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:rgb(246,249,252);
-    
-    
-  }
-  
-  .profile-container {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-    width: 100%;
-    max-width: 450px;
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .profile-container:hover {
-    transform: translateY(-5px);
-  }
-  
-  .profile-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 25px;
-  }
-  
-  .profile-image {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    overflow: hidden;
-    background: #ddd;
-    display: flex;
-    justify-content: center;
-    
-    align-items: center;
-    border: 3px solid;
-  }
-  .profile-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  .upload-btn {
-    cursor: pointer;
-    padding: 10px 16px;
-    background:  #222831;
-    color: white;
-    border-radius: 6px;
-    margin-top: 12px;
-    font-size: 14px;
-    transition: background 0.3s;
-  }
-  
-  .upload-btn:hover {
-    background:#f80404;
-  }
-  
-  .upload-btn input {
-    display: none;
-  }
-  
-  .submit-btn, .logout-btn {
-    width: 100%;
-    padding: 12px;
-    background: #222831;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 15px;
-    transition: background 0.3s, transform 0.2s;
-  }
-  
-  .submit-btn:hover, .logout-btn:hover {
-    background: #f80404;
-    transform: scale(1.03);
-  }
-  
-  .submit-btn:active, .logout-btn:active {
-    transform: scale(0.98);
-  }
-  /* Page background */
-.my-orders-container {
-  background-color: #222831;
+.profile-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  background-color: #f6f9fc;
   min-height: 100vh;
-  padding: 24px;
-  color: white;
 }
 
-/* Page title */
-.my-orders-title {
-  font-size: 32px;
-  font-weight: bold;
-  text-align: center;
-  color: #f84040;
-  margin-bottom: 24px;
-}
-
-/* Order card */
-.order-card {
-  background-color: #333943;
-  color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+.profile-container {
+  display: flex;
+  background: white;
   border-radius: 12px;
-  padding: 24px;
-  border: 1px solid #4e4e4e;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 1000px;
+  overflow: hidden;
 }
 
-
-
-/* Order header */
-.order-header {
+.profile-sidebar {
+  background-color: #fafafa;
+  padding: 30px;
+  width: 250px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  border-bottom: 1px solid #555;
-  padding-bottom: 12px;
+  border-right: 1px solid #ddd;
 }
 
-/* Order ID */
-.order-id {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* Order status */
-.order-status {
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* Status colors */
-.status-delivered {
-  background-color: green;
-  color: white;
-}
-
-.status-pending {
-  background-color: yellow;
-  color: black;
-}
-
-.status-shipped {
-  background-color: blue;
-  color: white;
-}
-
-/* Order details */
-.order-details {
-  margin-top: 12px;
-  color: #bbb;
-}
-
-/* Order total */
-.order-total {
+.profile-sidebar h3 {
+  margin-top: 10px;
   font-size: 20px;
-  font-weight: bold;
-  color: #f84040;
 }
 
-/* Product container */
-.product-container {
+.profile-sidebar p {
+  color: #555;
+  font-size: 14px;
+}
+
+.profile-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ddd;
   display: flex;
+  justify-content: center;
   align-items: center;
-  background-color: #444;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 12px;
+  margin-bottom: 15px;
 }
 
-/* Product image */
-.product-image {
-  width: 64px;
-  height: 64px;
-  border-radius: 8px;
-  border: 1px solid #666;
+.profile-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-/* Product name */
-.product-name {
-  font-size: 16px;
-  font-weight: bold;
-  margin-left: 12px;
+.profile-content {
+  padding: 30px;
+  flex-grow: 1;
 }
 
-/* Buttons */
-.order-buttons {
+.profile-section {
+  margin-bottom: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+}
+
+.profile-row {
   display: flex;
   justify-content: space-between;
-  margin-top: 16px;
+  margin: 15px 0;
 }
 
-.order-btn {
-  width: 48%;
-  padding: 10px;
+.profile-row span {
   font-weight: bold;
-  border-radius: 8px;
-  border: 1px solid #666;
+  width: 150px;
+}
+
+.profile-row input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.submit-btn, .logout-btn{
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #222831;
+  color: white;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
-  transition: opacity 0.2s ease-in-out;
+  font-size: 15px;
+  width: 100%;
 }
+.upload-btn {
+  color: black;
 
-.order-btn:hover {
-  opacity: 0.9;
+  padding: 12px;
+  background-color: #ffffff;
+ 
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  width: 100%;
 }
-
-.view-details-btn {
-  background: linear-gradient(to right, #4f46e5, #9333ea);
-  color: white;
-}
-
-.cancel-btn {
-  background: linear-gradient(to right, #ef4444, #ec4899);
-  color: white;
+.submit-btn:hover, .logout-btn:hover{
+  background-color: #f80404;
 }

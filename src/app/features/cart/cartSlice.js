@@ -1,13 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Get current user ID
+const userId = localStorage.getItem("userId");
+const cartKey = userId ? `cartList_${userId}` : "cartList_guest";
+
+// Load cart from localStorage for the specific user
 const storedCartList =
-  localStorage.getItem("cartList") !== null
-    ? JSON.parse(localStorage.getItem("cartList"))
+  localStorage.getItem(cartKey) !== null
+    ? JSON.parse(localStorage.getItem(cartKey))
     : [];
 
 const initialState = {
   cartList: storedCartList,
 };
+
+const getProductId = (product) => product.id || product._id;
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -16,54 +23,64 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const productToAdd = action.payload.product;
       const quantity = action.payload.num;
-      const productExit = state.cartList.find(
-        (item) => item.id === productToAdd.id
+      const productId = getProductId(productToAdd);
+
+      const productIndex = state.cartList.findIndex(
+        (item) => getProductId(item) === productId
       );
-      if (productExit) {
-        state.cartList = state.cartList.map((item) =>
-          item.id === action.payload.product.id
-            ? { ...productExit, qty: productExit.qty + action.payload.num }
-            : item
-        );
+
+      if (productIndex >= 0) {
+        state.cartList[productIndex].qty += quantity;
       } else {
         state.cartList.push({ ...productToAdd, qty: quantity });
       }
     },
+
     decreaseQty: (state, action) => {
-      const productTodecreaseQnty = action.payload;
-      const productExit = state.cartList.find(
-        (item) => item.id === productTodecreaseQnty.id
+      const product = action.payload;
+      const productId = getProductId(product);
+
+      const productIndex = state.cartList.findIndex(
+        (item) => getProductId(item) === productId
       );
-      if (productExit.qty === 1) {
-        state.cartList = state.cartList.filter(
-          (item) => item.id !== productExit.id
-        );
-      } else {
-        state.cartList = state.cartList.map((item) =>
-          item.id === productExit.id
-            ? { ...productExit, qty: productExit.qty - 1 }
-            : item
-        );
+
+      if (productIndex >= 0) {
+        if (state.cartList[productIndex].qty > 1) {
+          state.cartList[productIndex].qty -= 1;
+        } else {
+          state.cartList.splice(productIndex, 1);
+        }
       }
     },
+
     deleteProduct: (state, action) => {
-      const productToDelete = action.payload;
+      const product = action.payload;
+      const productId = getProductId(product);
+
       state.cartList = state.cartList.filter(
-        (item) => item.id !== productToDelete.id
+        (item) => getProductId(item) !== productId
       );
+    },
+
+    clearCart: (state) => {
+      state.cartList = [];
     },
   },
 });
 
+// ✅ Middleware to sync cart with localStorage per user
 export const cartMiddleware = (store) => (next) => (action) => {
   const result = next(action);
-  if (action.type?.startsWith("cart/")) {
+  if (action.type.startsWith("cart/")) {
     const cartList = store.getState().cart.cartList;
-    localStorage.setItem("cartList", JSON.stringify(cartList));
+    const userId = localStorage.getItem("userId");
+    const cartKey = userId ? `cartList_${userId}` : "cartList_guest";
+    localStorage.setItem(cartKey, JSON.stringify(cartList));
   }
   return result;
 };
 
-export const { addToCart, decreaseQty, deleteProduct } = cartSlice.actions;
+export const { addToCart, decreaseQty, deleteProduct, clearCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../pages/profile.css";
+import { toast } from 'react-toastify';
 
 const Profile = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Profile = ({ user, setUser }) => {
     const fetchProfile = async () => {
       try {
         setIsLoading(true);
-        const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem("token");
         if (!token) {
           navigate("/login");
           return;
@@ -44,7 +45,7 @@ const Profile = ({ user, setUser }) => {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("token");
     navigate("/login"); // Just redirect without using setUser
   };
   
@@ -55,7 +56,7 @@ const Profile = ({ user, setUser }) => {
       const formData = new FormData();
       formData.append("profileImage", file);
       try {
-        const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem("token");
         if (!token) {
           navigate("/login");
           return;
@@ -81,7 +82,7 @@ const Profile = ({ user, setUser }) => {
   };
 
  const handleSaveChanges = async () => {
-  const token = localStorage.getItem("authToken");
+  const token = localStorage.getItem("token");
   if (!token) {
     navigate("/login");
     return;
@@ -103,81 +104,90 @@ const Profile = ({ user, setUser }) => {
   }
 };
 
+// const requestSeller = async () => {
+//   try {
+//     const token = localStorage.getItem('token');
+//     await axios.post('http://localhost:5000/api/request-seller', {}, {
+//       headers: { Authorization: `Bearer ${token}` }
+//     });
+//     toast.success('Seller request sent!');
+//   } catch (error) {
+//     toast.error(error.response.data.message);
+//   }
+// };
 
   return (
-    <div className="profile-page">
-      <div className="profile-container">
-        {isLoading ? (
-          <p className="loading-text">Loading...</p>
-        ) : profile ? (
-          <>
-            <div className="profile-header">
-              <div className="profile-image">
-                {image ? (
-                  <img src={`http://localhost:5000${image}`} alt="Profile" />
-                ) : (
-                  <span>No Image</span>
-                )}
-              </div>
-
-              <label className="upload-btn">
-                Upload Image
-                <input type="file" onChange={handleImageUpload} />
-              </label>
-            </div>
-
-            <div className="profile-info">
-              <h2>{profile?.name}</h2>
-              <p>{profile?.email}</p>
-            </div>
-
-            <div className="profile-edit-form">
-              <div className="form-group">
-                <label>Delivery Address</label>
-                <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
-              </div>
-
-              <div className="form-group">
-                <label>Phone Number</label>
-                <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-              </div>
-
-              <div className="form-group">
-                <label>Shipping Address</label>
-                <input type="text" value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} />
-              </div>
-
-              <button className="submit-btn" onClick={handleSaveChanges}>
-                Save Changes
-              </button>
-            </div>
-
-            <div className="order-history-section">
-              <h3>Order History</h3>
-              {orderHistory.length > 0 ? (
-                <ul>
-                  {orderHistory.map((order, index) => (
-                    <li key={index}>
-                      Order #{order.id} - {order.date} - {order.status}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No orders found.</p>
-              )}
-            </div>
-
-            <button className="logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
-          </>
+<div className="profile-page">
+  <div className="profile-container">
+    {/* Left Sidebar */}
+    <div className="profile-sidebar">
+      <div className="profile-image">
+        {image ? (
+          <img src={`http://localhost:5000${image}`} alt="Profile" />
         ) : (
-          <p className="login-prompt">
-            Please <a href="/login">Login</a> to see your profile.
-          </p>
+          <span>No Image</span>
         )}
       </div>
+      <h3>{profile?.name}</h3>
+      <p>{profile?.email}</p>
+      <label className="upload-btn">
+        Upload Image
+        <input type="file" onChange={handleImageUpload} />
+      </label>
     </div>
+
+    {/* Right Content */}
+    <div className="profile-content">
+      <h1>Your Profile</h1>
+      <p>Your profile preferences help us personalize recommendations for you.</p>
+
+      {/* About You Section */}
+      <div className="profile-section">
+        <h2>About you</h2>
+
+        <div className="profile-row">
+          <span>Delivery Address</span>
+          <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
+        </div>
+
+        <div className="profile-row">
+          <span>Phone Number</span>
+          <input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        </div>
+
+        <div className="profile-row">
+          <span>Shipping Address</span>
+          <input type="text" value={shippingAddress} onChange={(e) => setShippingAddress(e.target.value)} />
+        </div>
+
+        <button className="submit-btn" onClick={handleSaveChanges}>
+          Save Changes
+        </button>
+      </div>
+
+      {/* Order History */}
+      <div className="profile-section">
+        <h2>Order History</h2>
+        {orderHistory.length > 0 ? (
+          <ul>
+            {orderHistory.map((order, index) => (
+              <li key={index}>
+                Order #{order.id} - {order.date} - {order.status}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No orders found.</p>
+        )}
+      </div>
+
+      <button className="logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
+  </div>
+</div>
+
   );
 };
 

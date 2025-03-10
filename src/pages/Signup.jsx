@@ -34,7 +34,8 @@ const Signup = () => {
 
     try {
       const response = await axios.post("http://localhost:5000/api/signup", formData);
-      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("token", response.data.token);
+
       setSuccess("Signup successful! Redirecting to login...");
       setError("");
 
@@ -71,7 +72,7 @@ const Signup = () => {
             <label>Select Role</label>
             <select name="role" value={formData.role} onChange={handleChange}>
               <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="seller">seller</option>
             </select>
           </div>
           {error && <p className="error-message">{error}</p>}

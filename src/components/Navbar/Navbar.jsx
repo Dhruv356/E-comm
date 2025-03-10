@@ -23,7 +23,12 @@ const NavBar = () => {
       setIsFixed(false);
     }
   }
-  window.addEventListener("scroll", scrollHandler);
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
   // useEffect(()=> {
   //   if(CartItem.length ===0) {
   //     const storedCart = localStorage.getItem("cartItem");
@@ -31,12 +36,16 @@ const NavBar = () => {
   //   }
   // },[])
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userRole"); // Remove user role too
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+      localStorage.removeItem(`cartList_${userId}`); // ✅ Clear specific user's cart
+    }
   
-    navigate("/login", { replace: true }); // Redirect & clear history
-    window.location.reload(); // Refresh the page
+    localStorage.clear(); // ✅ Clears token, userId, and everything else
+    navigate("/login", { replace: true });
+    window.location.reload();
   };
   
 
@@ -147,10 +156,10 @@ const NavBar = () => {
             </Nav.Item>
 
            
-            {userRole === "admin" && (
+            {userRole === "seller" && (
               <Nav.Item>
                 <Link className="navbar-link" to="/admin/dashboard" onClick={() => setExpand(false)}>
-                  <span className="nav-link-label">Admin</span>
+                  <span className="nav-link-label">Dashboard</span>
                 </Link>
               </Nav.Item>
             )}

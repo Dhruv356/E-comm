@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../index.css";
+import { jwtDecode } from "jwt-decode"; // ✅ Correct import
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -13,18 +15,25 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Reset error before new request
-
+  
     try {
+      localStorage.removeItem("cartItems"); // ✅ Clear cart on login
+  
       const response = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
         role,
       });
-
-      localStorage.setItem("authToken", response.data.token);
+  
+      const token = response.data.token;
+      localStorage.setItem("token", token);
       localStorage.setItem("userRole", role);
-      
-
+      localStorage.setItem("userName", response.data.userName);
+  
+      // ✅ Decode the JWT token to get userId
+      const decoded = jwtDecode(token);
+      localStorage.setItem("userId", decoded.userId); // ✅ Store userId for future use
+  
       alert("Login successful!");
       navigate("/");
       window.location.reload(); // Refresh the page
@@ -36,7 +45,6 @@ const Login = () => {
       }
     }
   };
-
   return (
     <div className="login-page">
       <div className="login-form">
@@ -47,7 +55,7 @@ const Login = () => {
             <label>Select Role</label>
             <select value={role} onChange={(e) => setRole(e.target.value)}>
               <option value="user">User</option>
-              <option value="admin">Admin</option>
+              <option value="seller">seller</option>
             </select>
           </div>
           <div className="form-group">

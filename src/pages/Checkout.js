@@ -9,7 +9,8 @@ const Checkout = () => {
 
   // Get cart items & total price from navigation state
   const cartItems = location.state?.cartList || [];
-  const totalPrice = location.state?.totalPrice || 0;
+  const buyNowItem = location.state?.orderItems || []; // 👈 Handles "Buy Now" case
+  const totalPrice = location.state?.totalPrice || buyNowItem.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -27,7 +28,7 @@ const Checkout = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem("token");
         if (!token) return;
 
         const response = await axios.get("http://localhost:5000/api/profile", {
@@ -54,19 +55,22 @@ const Checkout = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Get final items to checkout (cart + buy-now)
+  const finalCheckoutItems = cartItems.length > 0 ? cartItems : buyNowItem;
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error state
+    setError("");
 
-    if (cartItems.length === 0) {
+    if (finalCheckoutItems.length === 0) {
       alert("No items in cart!");
       return;
     }
 
     try {
       setLoading(true);
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("token");
       if (!token) {
         alert("Please log in to place an order!");
         return;
@@ -77,16 +81,17 @@ const Checkout = () => {
         address: formData.address,
         phone: formData.phone,
         paymentMethod: formData.paymentMethod,
-        cartItems: cartItems.map((item) => ({
-          productId: item._id, // Make sure this is an ObjectId
-          name: item.productName,
+        cartItems: finalCheckoutItems.map((item) => ({
+          productId: item._id || item.productId, // Handles both cart & buy-now
+          name: item.productName || item.name,
           price: item.price,
           qty: item.qty,
-          imgUrl: item.imgUrl,
+          imgUrl: item.imageUrl?.startsWith("/uploads")
+            ? `http://localhost:5000${item.imageUrl}`
+            : item.imgUrl || "/fallback-image.jpg",
         })),
         totalPrice,
       };
-      
 
       const response = await axios.post("http://localhost:5000/api/orders", orderDetails, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
@@ -107,7 +112,7 @@ const Checkout = () => {
       {/* Checkout Form */}
       <div className="checkout-container checkout-form">
         <h2>Checkout</h2>
-        {error && <p className="error-message">{error}</p>} {/* Show error message if any */}
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div>
             <label>Name:</label>
@@ -143,12 +148,20 @@ const Checkout = () => {
       {/* Order Summary */}
       <div className="checkout-container order-summary">
         <h3>Order Summary</h3>
-        {cartItems.length > 0 ? (
-          cartItems.map((item) => (
-            <div key={item.id} className="order-item">
-              <img src={item.imgUrl} alt={item.productName} className="order-item-image" />
+        {finalCheckoutItems.length > 0 ? (
+          finalCheckoutItems.map((item) => (
+            <div key={item.productId || item._id} className="order-item">
+              <img
+                src={
+                  item.imageUrl?.startsWith("/uploads")
+                    ? `http://localhost:5000${item.imageUrl}`
+                    : item.imgUrl || "https://via.placeholder.com/150"
+                }
+                alt={item.productName || item.name}
+                width="100"
+              />
               <p>
-                {item.productName} - ₹{item.price} x {item.qty}
+                {item.productName || item.name} - ₹{item.price} x {item.qty}
               </p>
             </div>
           ))

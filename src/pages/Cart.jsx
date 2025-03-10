@@ -2,103 +2,113 @@ import { useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  addToCart,
-  decreaseQty,
-  deleteProduct,
-} from "../app/features/cart/cartSlice";
-
-
+import { addToCart, decreaseQty, deleteProduct } from "../app/features/cart/cartSlice";
+import { toast } from "react-toastify";
+import { FaPlus, FaMinus, FaTrash } from "react-icons/fa";
+import "./cart.css";
 
 const Cart = () => {
   const { cartList } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // ✅ Add navigation
-  // middlware to localStorage
-  const totalPrice = cartList.reduce(
-    (price, item) => price + item.qty * item.price,
-    0
-  );
+  const navigate = useNavigate();
+
+  // Scroll to top on component mount
   useEffect(() => {
     window.scrollTo(0, 0);
-    // if(CartItem.length ===0) {
-    //   const storedCart = localStorage.getItem("cartItem");
-    //   setCartItem(JSON.parse(storedCart));
-    // }
   }, []);
 
+  // Calculate total price
+  const totalPrice = cartList.reduce((price, item) => price + item.qty * item.price, 0);
+
+  // Handle Checkout
   const handleCheckout = () => {
     if (cartList.length === 0) {
-      alert("Your cart is empty! Add products before checkout.");
+      toast.warning("Your cart is empty! Add products before checkout.");
       return;
     }
     navigate("/checkout", { state: { cartList, totalPrice } });
   };
+
   return (
     <section className="cart-items">
       <Container>
         <Row className="justify-content-center">
+          {/* Cart Items Section */}
           <Col md={8}>
-            {cartList.length === 0 && (
-              <h1 className="no-items product">No Items are add in Cart</h1>
-            )}
-            {cartList.map((item) => {
-              const productQty = item.price * item.qty;
-              return (
+            {cartList.length === 0 ? (
+              <h2 className="no-items">No Items in Cart</h2>
+            ) : (
+              cartList.map((item) => (
                 <div className="cart-list" key={item.id}>
-                  <Row>
+                  <Row className="align-items-center">
+                    {/* Product Image */}
                     <Col className="image-holder" sm={4} md={3}>
-                      <img src={item.imgUrl} alt="" />
+                    
+                    <img
+                src={
+                  item.imageUrl?.startsWith("/uploads")
+                    ? `http://localhost:5000${item.imageUrl}`
+                    : item.imgUrl || "https://via.placeholder.com/150"
+                }
+                alt={item.productName || item.name}
+                width="100"
+              />
                     </Col>
+
+                    {/* Product Details */}
                     <Col sm={8} md={9}>
-                      <Row className="cart-content justify-content-center">
+                      <Row className="cart-content">
                         <Col xs={12} sm={9} className="cart-details">
                           <h3>{item.productName}</h3>
                           <h4>
-                          ₹&nbsp;{item.price}.00 * {item.qty}
-                            <span>₹&nbsp;{productQty}.00</span>
+                            ₹&nbsp;{item.price}.00 × {item.qty}
+                            <span>₹&nbsp;{item.price * item.qty}.00</span>
                           </h4>
                         </Col>
+
+                        {/* Quantity Controls */}
                         <Col xs={12} sm={3} className="cartControl">
                           <button
                             className="incCart"
-                            onClick={() =>
-                              dispatch(addToCart({ product: item, num: 1 }))
-                            }
+                            onClick={() => dispatch(addToCart({ product: item, num: 1 }))}
+                            aria-label="Increase quantity"
                           >
-                            <i className="fa-solid fa-plus"></i>
+                            <FaPlus />
                           </button>
                           <button
                             className="desCart"
                             onClick={() => dispatch(decreaseQty(item))}
+                            aria-label="Decrease quantity"
                           >
-                            <i className="fa-solid fa-minus"></i>
+                            <FaMinus />
+                          </button>
+                          <button
+                            className="desCart"
+                            onClick={() => dispatch(deleteProduct(item))}
+                            aria-label="Remove item"
+                          >
+                            <FaTrash />
                           </button>
                         </Col>
                       </Row>
                     </Col>
-                    <button
-                      className="delete"
-                      onClick={() => dispatch(deleteProduct(item))}
-                    >
-                      <ion-icon name="close"></ion-icon>
-                    </button>
-                    
                   </Row>
                 </div>
-                
-              );
-              
-            })}
+              ))
+            )}
           </Col>
+
+          {/* Cart Summary Section */}
           <Col md={4}>
             <div className="cart-total">
               <h2>Cart Summary</h2>
-              <div className=" d_flex">
+              <div className="d_flex">
                 <h4>Total Price:</h4>
                 <h3>₹&nbsp;{totalPrice}.00</h3>
-                <button className="check-out-btn" onClick={handleCheckout}>Check-Out</button>
               </div>
+              <button className="check-out-btn" onClick={handleCheckout}>
+                Check-Out
+              </button>
             </div>
           </Col>
         </Row>

@@ -11,7 +11,7 @@ const MyOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem("token");
         if (!token) {
           setError("Unauthorized! Please log in.");
           setLoading(false);
@@ -39,7 +39,7 @@ const MyOrders = () => {
     if (!window.confirm("Are you sure you want to cancel this order?")) return;
   
     try {
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("token");
       await axios.delete(`http://localhost:5000/api/orders/${orderId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -50,6 +50,7 @@ const MyOrders = () => {
       alert("Failed to cancel order. Please try again.");
     }
   };
+  
 
   return (
     <div className="my-orders-container">
@@ -91,21 +92,20 @@ const MyOrders = () => {
               </div>
 
               <div className="order-buttons">
-              <button className="order-btn view-details-btn" onClick={() => setSelectedOrder(order)}>
+                <button className="order-btn view-details-btn" onClick={() => setSelectedOrder(order)}>
                   📜 View Details
                 </button>
                 {order.status !== "Delivered" && (
                   <button className="order-btn cancel-btn" onClick={() => cancelOrder(order._id)}>
                     ❌ Cancel Order
                   </button>
-
                 )}
               </div>
             </div>
           ))}
         </div>
       )}
-      {/* Show Order Details below the orders */}
+      {/* Show Order Details */}
       {selectedOrder && (
         <div className="order-details">
           <h3>📜 Order Details</h3>
@@ -116,7 +116,6 @@ const MyOrders = () => {
           <ul>
             {selectedOrder.items.map((item) => (
               <li key={item.productId} className="order-item">
-               
                 {item.name} - ₹{item.price} x {item.quantity}
               </li>
             ))}

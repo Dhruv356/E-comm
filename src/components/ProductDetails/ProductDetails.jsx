@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -10,16 +10,14 @@ import "./product-details.css";
 
 const ProductDetails = ({ selectedProduct }) => {
   const { id } = useParams();
+  const navigate = useNavigate(); // ✅ Initialize navigate
   const dispatch = useDispatch();
   const [product, setProduct] = useState(selectedProduct || null);
   const [loading, setLoading] = useState(!selectedProduct);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  
 
   useEffect(() => {
-    
-    
     if (!selectedProduct && id) {
       const fetchProduct = async () => {
         try {
@@ -29,11 +27,8 @@ const ProductDetails = ({ selectedProduct }) => {
           setError("Failed to fetch product details.");
         } finally {
           setLoading(false);
-          
         }
       };
-      
-
       fetchProduct();
     }
   }, [id, selectedProduct]);
@@ -53,6 +48,28 @@ const ProductDetails = ({ selectedProduct }) => {
     dispatch(addToCart({ product, num: quantity }));
     toast.success("Product has been added to cart!");
   };
+
+  const handleBuyNow = () => {
+    if (!product) return;
+  
+    navigate("/checkout", {
+      state: {
+        orderItems: [
+          {
+            productId: product._id,
+            name: product.productName,
+            price: product.price,
+            qty: quantity,
+            imgUrl: product.imageUrl?.startsWith("/uploads")
+              ? `http://localhost:5000${product.imageUrl}`
+              : product.imgUrl || "/fallback-image.jpg", // ✅ Ensure correct image URL
+          },
+        ],
+        directBuy: true, // ✅ Flag to differentiate from cart checkout
+      },
+    });
+  };
+  
 
   if (loading) return <h2 className="loading">Loading...</h2>;
   if (error) return <h2 className="error">{error}</h2>;
@@ -94,8 +111,6 @@ const ProductDetails = ({ selectedProduct }) => {
 
             <div className="info">
               <span className="discounted-price">₹{product.price}</span>
-       
-              
             </div>
 
             <p className="description">{product.shortDesc}</p>
@@ -106,7 +121,7 @@ const ProductDetails = ({ selectedProduct }) => {
               </button>
               <input
                 className="qty-input"
-                type="number"
+                type="text"
                 onChange={handleQuantityChange}
                 value={quantity}
                 min="1"
@@ -120,7 +135,9 @@ const ProductDetails = ({ selectedProduct }) => {
               <button className="add-to-cart" onClick={handleAddToCart}>
                 Add To Cart
               </button>
-              <button className="buy-now">Buy Now</button>
+              <button className="buy-now" onClick={handleBuyNow}>
+                Buy Now
+              </button>
             </div>
           </Col>
         </Row>

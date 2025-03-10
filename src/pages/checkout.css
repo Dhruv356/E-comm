@@ -3,13 +3,15 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 100px; /* Space between both containers */
+    gap: 100px;
+    /* Space between both containers */
     padding: 40px;
 }
 
 /* Individual Checkout Form & Order Summary Containers */
 .checkout-container {
-    width: 700px; /* Fixed width for each section */
+    width: 700px;
+    /* Fixed width for each section */
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
@@ -18,7 +20,8 @@
 
 /* Checkout Form Container */
 .checkout-form {
-    background: #222831; /* Dark background */
+    background: #222831;
+    /* Dark background */
     color: #ffffff;
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -29,9 +32,10 @@
 
 /* Order Summary Container */
 .order-summary {
-    width: 400px; /* Fixed width for each section */
+    width: 400px;
+    /* Fixed width for each section */
     padding: 25px;
-    border: 5px solid ;
+    border: 5px solid;
     border-color: #1a1a1a;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
@@ -39,7 +43,8 @@
 }
 
 /* Headings */
-.checkout-container h2, .checkout-container h3 {
+.checkout-container h2,
+.checkout-container h3 {
     text-align: center;
     margin-bottom: 20px;
     color: #ffffff;
@@ -128,7 +133,8 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .checkout-wrapper {
-        flex-direction: column; /* Stack in smaller screens */
+        flex-direction: column;
+        /* Stack in smaller screens */
         align-items: center;
     }
 
