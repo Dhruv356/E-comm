@@ -62,7 +62,9 @@ const Signup = () => {
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+            <input type="password" name="password" value={formData.password} onChange={handleChange}   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+  title="Please enter a valid email address"
+required />
           </div>
           <div className="form-group">
             <label>Confirm Password</label>

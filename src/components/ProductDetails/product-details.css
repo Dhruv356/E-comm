@@ -180,6 +180,38 @@
 .add-to-cart:hover, .buy-now:hover {
   transform: scale(1.05);
 }
+.view-more-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.view-more-btn:hover {
+  text-decoration: underline;
+}
+.thumbnail-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+  opacity: 0.5;
+  transition: opacity 0.5s, transform 0.3s ease-in-out;
+}
+
+.thumbnail.active {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 
 /* Responsive Design */
 @media screen and (max-width: 992px) {

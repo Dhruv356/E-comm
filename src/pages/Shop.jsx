@@ -6,6 +6,7 @@ import useWindowScrollToTop from "../hooks/useWindowScrollToTop";
 import "../index.css";
 import all from "../Images/all.jpg";
 import { useLocation } from "react-router-dom";
+import SidebarFilter from "../components/sidebarfiltter/Sidebarfiltter";
 
 const Shop = () => {
   const location = useLocation();
@@ -15,7 +16,7 @@ const Shop = () => {
   const [allProducts, setAllProducts] = useState(staticProducts);
   const [filterList, setFilterList] = useState(staticProducts);
   const [activeCategory, setActiveCategory] = useState("All");
-
+  
   useWindowScrollToTop();
 
   // Fetch products from backend
@@ -86,11 +87,38 @@ const response = await fetch("http://localhost:5000/api/products", {
         : allProducts.filter((item) => item.category === category)
     );
   };
+ 
+  
+  const handleFilterChange = (filters) => {
+    let filtered = allProducts;
 
+    if (filters.priceRange) {
+      filtered = filtered.filter((item) => item.price >= filters.priceRange[0] && item.price <= filters.priceRange[1]);
+    }
+
+    if (filters.brand) {
+      filtered = filtered.filter((item) => item.brand?.toLowerCase() === filters.brand.toLowerCase());
+    }
+
+    if (filters.rating) {
+      filtered = filtered.filter((item) => item.avgRating >= Number(filters.rating));
+    }
+
+    if (filters.inStock) {
+      filtered = filtered.filter((item) => item.stock > 0);
+    }
+
+    setFilterList(filtered);
+  };
+  
   return (
+    
     <Fragment>
-      <Banner title="Products" />
+    
+     
 
+      <Banner title="Products" />
+      
       {/* Category Cards */}
       <section className="category-section">
         <h2 className="section-title">Browse by Category</h2>
@@ -109,8 +137,13 @@ const response = await fetch("http://localhost:5000/api/products", {
               <p className="category-name">{category}</p>
             </div>
           ))}
+          
         </div>
       </section>
+      
+ <div className="filter-container">
+        <SidebarFilter onFilterChange={handleFilterChange} />
+      </div>
 
       {/* Product List */}
       <section className="products-section">

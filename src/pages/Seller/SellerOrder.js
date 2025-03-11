@@ -4,11 +4,18 @@ import axios from "axios";
 const SellerOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedRows, setExpandedRows] = useState({});
   const sellerId = localStorage.getItem("userId"); // ✅ Get seller ID from localStorage
 
   useEffect(() => {
     fetchSellerOrders();
   }, []);
+  const toggleAddress = (orderId) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [orderId]: !prev[orderId],
+    }));
+  };
 
   const fetchSellerOrders = async () => {
     try {
@@ -75,7 +82,25 @@ const SellerOrders = () => {
                   <tr key={item.productId}>
                     <td>{order._id}</td>
                     <td>{order.userId?.name || "Unknown"}</td>
-                    <td>{order.shippingAddress}</td> {/* ✅ Display address */}
+ {/* ✅ Show "View" button only for long addresses */}
+ <td className="address-column">
+                {expandedRows[order._id] ? (
+                  order.shippingAddress
+                ) : order.shippingAddress.length > 30? (
+                  <>
+                    {order.shippingAddress.substring(0, 30)}...
+                    <button
+                      className="view-btn"
+                      onClick={() => toggleAddress(order._id)}
+                    >
+                      View
+                    </button>
+                  </>
+                ) : (
+                  order.shippingAddress
+                )}
+              </td>
+
                     <td>{order.phone}</td> {/* ✅ Display phone */}
                     <td>
                       <img src={item.image} alt={item.name} className="product-img" />

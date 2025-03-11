@@ -110,44 +110,44 @@ const AdminDashboard = () => {
   );
 };
 
-// Dashboard Page with Dynamic Chart Data
+// Dashboard with Orders & Revenue
 const Dashboard = () => {
-  const [stats, setStats] = useState({ users: 11150, orders: 2564, revenue: 5214 });
+  const [stats, setStats] = useState({ totalOrders: 0, totalRevenue: 0 });
 
-  // useEffect(() => {
-  //   const fetchStats = async () => {
-  //     try {
-  //       const token = localStorage.getItem("authToken");
-  //       const response = await axios.get("http://localhost:5000/api/admin/stats", {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       });
-  //       setStats(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching dashboard stats:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:5000/api/orders/seller/stats", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-  //   fetchStats();
-  // }, []);
+        setStats(response.data);
+      } catch (error) {
+        console.error("Error fetching seller stats:", error);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const data = {
-    labels: ["Users", "Orders", "Revenue"],
+    labels: ["Orders", "Revenue"],
     datasets: [
       {
         label: "Statistics",
-        data: [stats.users, stats.orders, stats.revenue],
-        backgroundColor: ["#2563eb", "#f59e0b", "#10b981"],
+        data: [stats.totalOrders, stats.totalRevenue],
+        backgroundColor: ["#f59e0b", "#10b981"],
       },
     ],
   };
 
   return (
     <div>
-      <h1 className="page-title">Dashboard</h1>
+      <h1 className="page-title">Seller Dashboard</h1>
       <div className="grid-container">
-        <Card title="Total Users" number={stats.users} icon={<FaUsers />} />
-        <Card title="Total Orders" number={stats.orders} icon={<FaBoxOpen />} />
-        <Card title="Total Revenue" number={`₹${stats.revenue}`} icon={<FaChartBar />} />
+        <Card title="Total Orders" number={stats.totalOrders} icon={<FaBoxOpen />} />
+        <Card title="Total Revenue" number={`₹${stats.totalRevenue}`} icon={<FaChartBar />} />
       </div>
 
       {/* Chart Section */}

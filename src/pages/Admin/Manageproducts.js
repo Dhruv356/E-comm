@@ -89,45 +89,58 @@ const Manageproducts = () => {
         className="search-bar"
       />
 
-      <button className="add-product-btn">➕ Add New Product</button>
+      {/* <button className="add-product-btn">➕ Add New Product</button> */}
 
       <div className="product-card">
         <table className="product-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Price</th>
-              <th>Category</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product, index) => (
-              <tr key={product._id}>
-                <td>{index + 1}</td>
-                <td>
-                  {product.imageUrl ? (
-                    <img
-                      src={`http://localhost:5000${product.imageUrl}`}
-                      alt={product.productName}
-                      className="product-image"
-                    />
-                  ) : (
-                    "No Image"
-                  )}
-                </td>
-                <td>{product.productName}</td>
-                <td>₹{product.price}</td>
-                <td>{product.category}</td>
-                <td>
-                  <button className="edit-btn" onClick={() => handleEdit(product)}>✏️ Edit</button>
-                  <button className="delete-btn" onClick={() => handleDelete(product._id)}>🗑 Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+        <thead>
+  <tr>
+    <th>#</th>
+    <th>Image</th>
+    <th>Product Name</th>
+    <th>Price</th>
+    <th>Category</th>
+    <th>Seller</th> {/* ✅ New Column */}
+    <th>Actions</th>
+  </tr>
+</thead>
+
+<tbody>
+  {products.map((product, index) => (
+    <tr key={product._id}>
+      <td>{index + 1}</td>
+      <td>
+        {product.imageUrl ? (
+          <img
+            src={`http://localhost:5000${product.imageUrl}`}
+            alt={product.productName}
+            className="product-image"
+          />
+        ) : (
+          "No Image"
+        )}
+      </td>
+      <td>{product.productName}</td>
+      <td>₹{product.price}</td>
+      <td>{product.category}</td>
+      <td>
+        {product.sellerId ? (
+          <>
+            <strong>{product.sellerId.name}</strong> <br />
+            <small>{product.sellerId.email}</small>
+          </>
+        ) : (
+          "Unknown Seller"
+        )}
+      </td>
+      <td>
+        <button className="edit-btn" onClick={() => handleEdit(product)}>✏️ Edit</button>
+        <button className="delete-btn" onClick={() => handleDelete(product._id)}>🗑 Delete</button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
         </table>
       </div>
 

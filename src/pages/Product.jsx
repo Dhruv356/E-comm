@@ -34,7 +34,7 @@ const Product = () => {
     <Fragment>
       <Banner title={selectedProduct?.productName} />
       <ProductDetails selectedProduct={selectedProduct} />
-      <ProductReviews selectedProduct={selectedProduct} />
+     
       <section className="related-products">
         <Container>
           <h3>You might also like</h3>

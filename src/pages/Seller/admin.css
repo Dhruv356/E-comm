@@ -529,56 +529,128 @@ select,
   transition: 0.3s ease-in-out;
 }
 /*sellerorder.css*/
+/* General container styling */
 .seller-orders-container {
-
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ 
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
 }
 
+/* Table Styling */
 .orders-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.orders-table th, .orders-table td {
-  padding: 12px;
+.orders-table th, 
+.orders-table td {
+  padding: 14px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .orders-table th {
-  background-color: #f8f9fa;
+  background-color: #f5f5f5;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
+/* Alternating Row Colors */
+.orders-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.orders-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Product Image */
 .product-img {
   width: 50px;
   height: 50px;
   border-radius: 6px;
   object-fit: cover;
+  display: inline-block;
+  vertical-align: middle;
   margin-right: 10px;
 }
 
+/* Status Badge Styling */
 .status {
-  padding: 5px 10px;
-  border-radius: 5px;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
   font-weight: bold;
+  font-size: 0.85rem;
+  text-transform: capitalize;
 }
 
 .status.processing {
-  background-color: yellow;
-  color: black;
+  background-color: #ffeb3b;
+  color: #333;
 }
 
 .status.shipped {
-  background-color: blue;
+  background-color: #007bff;
   color: white;
 }
 
 .status.delivered {
-  background-color: green;
+  background-color: #28a745;
   color: white;
+}
+
+/* Select Dropdown Styling */
+select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+select:hover {
+  border-color: #888;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .orders-table th, .orders-table td {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .seller-orders-container {
+    padding: 16px;
+  }
+}
+
+/* Address Column */
+.address-column {
+  max-width: 250px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+/* View Button */
+.view-btn {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 14px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.view-btn:hover {
+  text-decoration: underline;
 }

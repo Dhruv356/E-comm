@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // ✅ Import useNavigate
+import { useParams, useNavigate } from "react-router-dom"; 
 import { Col, Container, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -10,12 +10,14 @@ import "./product-details.css";
 
 const ProductDetails = ({ selectedProduct }) => {
   const { id } = useParams();
-  const navigate = useNavigate(); // ✅ Initialize navigate
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [product, setProduct] = useState(selectedProduct || null);
   const [loading, setLoading] = useState(!selectedProduct);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [activeThumbnailIndex, setActiveThumbnailIndex] = useState(0); // ✅ Thumbnail index state
 
   useEffect(() => {
     if (!selectedProduct && id) {
@@ -33,43 +35,13 @@ const ProductDetails = ({ selectedProduct }) => {
     }
   }, [id, selectedProduct]);
 
-  const handleQuantityChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (!isNaN(value) && value > 0) setQuantity(value);
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveThumbnailIndex((prevIndex) => (prevIndex + 1) % 4); // ✅ Change thumbnail every few seconds
+    }, 5000); // ✅ Change every 2 seconds
 
-  const incrementQuantity = () => setQuantity((prev) => prev + 1);
-
-  const decrementQuantity = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
-
-  const handleAddToCart = () => {
-    dispatch(addToCart({ product, num: quantity }));
-    toast.success("Product has been added to cart!");
-  };
-
-  const handleBuyNow = () => {
-    if (!product) return;
-  
-    navigate("/checkout", {
-      state: {
-        orderItems: [
-          {
-            productId: product._id,
-            name: product.productName,
-            price: product.price,
-            qty: quantity,
-            imgUrl: product.imageUrl?.startsWith("/uploads")
-              ? `http://localhost:5000${product.imageUrl}`
-              : product.imgUrl || "/fallback-image.jpg", // ✅ Ensure correct image URL
-          },
-        ],
-        directBuy: true, // ✅ Flag to differentiate from cart checkout
-      },
-    });
-  };
-  
+    return () => clearInterval(interval); // ✅ Cleanup interval on unmount
+  }, []);
 
   if (loading) return <h2 className="loading">Loading...</h2>;
   if (error) return <h2 className="error">{error}</h2>;
@@ -88,13 +60,22 @@ const ProductDetails = ({ selectedProduct }) => {
                   : product?.imgUrl || "/fallback-image.jpg"
               }
               alt={product?.productName || "Product Image"}
-              onError={(e) => {
-                e.target.src = "/fallback-image.jpg";
-              }}
+              className="main-image"
             />
+
+            {/* ✅ Auto-Cycling Thumbnail Section */}
             <div className="thumbnail-container">
-              {[1, 2, 3, 4].map((i) => (
-                <img key={i} className="thumbnail" src={product?.imgUrl} alt="Thumbnail" />
+              {[...Array(4)].map((_, i) => (
+                <img
+                  key={i}
+                  className={`thumbnail ${i === activeThumbnailIndex ? "active" : ""}`}
+                  src={
+                    product.imageUrl?.startsWith("/uploads")
+                      ? `http://localhost:5000${product.imageUrl}`
+                      : product.imgUrl || "/fallback-image.jpg"
+                  }
+                  alt={`Thumbnail ${i}`}
+                />
               ))}
             </div>
           </Col>
@@ -113,29 +94,57 @@ const ProductDetails = ({ selectedProduct }) => {
               <span className="discounted-price">₹{product.price}</span>
             </div>
 
-            <p className="description">{product.shortDesc}</p>
+            <p className="description">
+              {showFullDescription || product.description.length <= 100
+                ? product.description
+                : `${product.description.substring(0, 100)}...`}
+
+              {product.description.length > 100 && (
+                <button 
+                  className="view-more-btn"
+                  onClick={() => setShowFullDescription(!showFullDescription)}
+                >
+                  {showFullDescription ? "View Less" : "View More"}
+                </button>
+              )}
+            </p>
 
             <div className="quantity-controls">
-              <button className="qty-btn" onClick={decrementQuantity}>
+              <button className="qty-btn" onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}>
                 <FaMinus />
               </button>
               <input
                 className="qty-input"
-                type="text"
-                onChange={handleQuantityChange}
+                type="number"
+                onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                 value={quantity}
                 min="1"
               />
-              <button className="qty-btn" onClick={incrementQuantity}>
+              <button className="qty-btn" onClick={() => setQuantity((prev) => prev + 1)}>
                 <FaPlus />
               </button>
             </div>
 
             <div className="button-group">
-              <button className="add-to-cart" onClick={handleAddToCart}>
+              <button className="add-to-cart" onClick={() => dispatch(addToCart({ product, num: quantity }))}>
                 Add To Cart
               </button>
-              <button className="buy-now" onClick={handleBuyNow}>
+              <button className="buy-now" onClick={() => navigate("/checkout", {
+                state: {
+                  orderItems: [
+                    {
+                      productId: product._id,
+                      name: product.productName,
+                      price: product.price,
+                      qty: quantity,
+                      imgUrl: product.imageUrl?.startsWith("/uploads")
+                        ? `http://localhost:5000${product.imageUrl}`
+                        : product.imgUrl || "/fallback-image.jpg",
+                    },
+                  ],
+                  directBuy: true,
+                },
+              })}>
                 Buy Now
               </button>
             </div>

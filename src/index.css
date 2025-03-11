@@ -27,11 +27,11 @@
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
       monospace;
   }
-
+/* 
   section {
     padding-top: 60px !important;
     padding-bottom: 60px !important;
-  }
+  } */
 
   a {
     text-decoration: none;
@@ -97,6 +97,14 @@
     margin: 40px auto 20px;
     width: fit-content;
   }
+  .filter-container {
+    display: flex;
+    justify-content: flex-end; /* Moves the filter button to the right */
+    align-items: center; /* Aligns vertically */
+    margin-bottom: 20px;
+    padding-right: 50px; /* Adjust spacing from the right */
+}
+
 
   /* Background Gradient */
   .login-page {
@@ -249,7 +257,7 @@
 
   .section-title {
     font-size: 22px;
-    margin-bottom: 20px;
+
   }
 
   .category-container {
