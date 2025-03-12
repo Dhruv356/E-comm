@@ -43,14 +43,14 @@ const SidebarFilter = ({ onFilterChange }) => {
             </div>
 
             {/* Brand */}
-            <div className="filter-group">
+            {/* <div className="filter-group">
               <label>Brand</label>
               <input
                 type="text"
                 placeholder="Enter brand name"
                 onChange={(e) => setBrand(e.target.value)}
               />
-            </div>
+            </div> */}
 
             {/* Rating */}
             <div className="filter-group">
