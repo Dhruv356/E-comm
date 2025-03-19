@@ -5,11 +5,13 @@ const SellerOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [expandedRows, setExpandedRows] = useState({});
-  const sellerId = localStorage.getItem("userId"); // ✅ Get seller ID from localStorage
+  const [selectedOrder, setSelectedOrder] = useState(null); // ✅ Track selected order for details modal
+  const sellerId = localStorage.getItem("userId");
 
   useEffect(() => {
     fetchSellerOrders();
   }, []);
+
   const toggleAddress = (orderId) => {
     setExpandedRows((prev) => ({
       ...prev,
@@ -23,8 +25,6 @@ const SellerOrders = () => {
       const response = await axios.get("http://localhost:5000/api/orders/seller-orders", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      console.log("✅ Seller Orders Data:", response.data.orders); // Debugging log
 
       setOrders(response.data.orders);
     } catch (error) {
@@ -48,8 +48,9 @@ const SellerOrders = () => {
       alert("❌ Failed to update order status.");
     }
   };
+
   // ✅ Filter only seller-specific orders
-  const filteredOrders = orders.filter(order => 
+  const filteredOrders = orders.filter(order =>
     order.items.some(item => item.sellerId && item.sellerId.toString() === sellerId)
   );
 
@@ -66,46 +67,63 @@ const SellerOrders = () => {
             <tr>
               <th>Order ID</th>
               <th>Customer</th>
-              <th>Address</th> {/* ✅ Show Address */}
-              <th>Phone</th> {/* ✅ Show Phone */}
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Status</th>
-              <th>Actions</th>
+             
+              <th>Phone</th>
+              <th>Actions</th> {/* ✅ Added Actions for "View Details" */}
             </tr>
           </thead>
           <tbody>
-            {filteredOrders.map((order) =>
-              order.items
-                .filter(item => item.sellerId && item.sellerId.toString() === sellerId)
-                .map((item) => (
-                  <tr key={item.productId}>
-                    <td>{order._id}</td>
-                    <td>{order.userId?.name || "Unknown"}</td>
- {/* ✅ Show "View" button only for long addresses */}
- <td className="address-column">
-                {expandedRows[order._id] ? (
-                  order.shippingAddress
-                ) : order.shippingAddress.length > 30? (
-                  <>
-                    {order.shippingAddress.substring(0, 30)}...
-                    <button
-                      className="view-btn"
-                      onClick={() => toggleAddress(order._id)}
-                    >
-                      View
-                    </button>
-                  </>
-                ) : (
-                  order.shippingAddress
-                )}
-              </td>
+            {filteredOrders.map((order) => (
+              <tr key={order._id}>
+                <td>{order._id}</td>
+                <td>{order.userId?.name || "Unknown"}</td>
 
-                    <td>{order.phone}</td> {/* ✅ Display phone */}
+              
+
+                <td>{order.phone}</td>
+
+                <td>
+                  <button
+                    className=" ord-details-btn"
+                    onClick={() => setSelectedOrder(order)}
+                  >
+                    View Details
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {/* ✅ Order Details Modal */}
+      {selectedOrder && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>🛍️ Order Details</h3>
+            <p><strong>Order ID:</strong> {selectedOrder._id}</p>
+            <p><strong>Customer:</strong> {selectedOrder.userId?.name || "Unknown"}</p>
+            <p><strong>Shipping Address:</strong> {selectedOrder.shippingAddress}</p>
+            <p><strong>Phone:</strong> {selectedOrder.phone}</p>
+
+            <h4>🛒 Ordered Products</h4>
+            <table className="product-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
+                  <th>Update Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedOrder.items.map((item) => (
+                  <tr key={item.productId}>
                     <td>
                       <img src={item.image} alt={item.name} className="product-img" />
-                      {item.name}
                     </td>
+                    <td>{item.name}</td>
                     <td>{item.quantity}</td>
                     <td>
                       <span className={`status ${item.status ? item.status.toLowerCase() : "pending"}`}>
@@ -113,28 +131,31 @@ const SellerOrders = () => {
                       </span>
                     </td>
                     <td>
-  {item.status !== "Delivered" && (
-    <select
-      value={item.status}
-      onChange={(e) =>
-        updateOrderStatus(order._id, 
-          typeof item.productId === "object" ? item.productId._id : item.productId, 
-          e.target.value)
-      }
-    >
-      <option value="Processing">Processing</option>
-      <option value="Shipped">Shipped</option>
-      <option value="Delivered">Delivered</option>
-    </select>
-  )}
-</td>
-
-
+                      {item.status !== "Delivered" && (
+                        <select
+                          value={item.status}
+                          onChange={(e) =>
+                            updateOrderStatus(
+                              selectedOrder._id,
+                              typeof item.productId === "object" ? item.productId._id : item.productId,
+                              e.target.value
+                            )
+                          }
+                        >
+                          <option value="Processing">Processing</option>
+                          <option value="Shipped">Shipped</option>
+                          <option value="Delivered">Delivered</option>
+                        </select>
+                      )}
+                    </td>
                   </tr>
-                ))
-            )}
-          </tbody>
-        </table>
+                ))}
+              </tbody>
+            </table>
+
+            <button className="close-btn" onClick={() => setSelectedOrder(null)}>Close</button>
+          </div>
+        </div>
       )}
     </div>
   );

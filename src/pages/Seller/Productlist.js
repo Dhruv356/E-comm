@@ -6,10 +6,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
-
-
   const [previewImage, setPreviewImage] = useState(null);
+
+  useEffect(() => {
+    fetchSellerProducts();
+  }, []);
+
   const fetchSellerProducts = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -18,14 +22,9 @@ const ProductList = () => {
       });
       setProducts(response.data);
     } catch (error) {
-      console.error("Error fetching products:", error.response?.data || error.message);
       alert("Failed to load products");
     }
   };
-
-  useEffect(() => {
-    fetchSellerProducts();
-  }, []);
 
   const handleDelete = async (id) => {
     try {
@@ -35,7 +34,6 @@ const ProductList = () => {
       });
       setProducts(products.filter((product) => product._id !== id));
     } catch (error) {
-      console.error("Error deleting product:", error.response?.data || error.message);
       alert("Failed to delete product.");
     }
   };
@@ -54,26 +52,23 @@ const ProductList = () => {
           productName: currentProduct.productName,
           price: currentProduct.price,
           category: currentProduct.category,
+          description: currentProduct.description,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       alert("Product updated successfully!");
       setShowEditModal(false);
-      fetchSellerProducts(); // Refresh the list after edit
+      fetchSellerProducts();
     } catch (error) {
-      console.error("Error updating product:", error.response?.data || error.message);
       alert("Failed to update product.");
     }
   };
 
-  const [showFullDescription, setShowFullDescription] = useState(false);
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setCurrentProduct({ ...currentProduct, imageFile: file });
-      setPreviewImage(URL.createObjectURL(file));
-    }
+  const handleViewDetails = (product) => {
+    setCurrentProduct(product);
+    setShowDetailsModal(true);
   };
+
   return (
     <div className="product-list-container">
       <h1>Product List</h1>
@@ -85,7 +80,6 @@ const ProductList = () => {
             <tr>
               <th>Image</th>
               <th>Product Name</th>
-              <th>Description</th>
               <th>Category</th>
               <th>Price</th>
               <th>Actions</th>
@@ -103,42 +97,49 @@ const ProductList = () => {
                   />
                 </td>
                 <td>{product.productName}</td>
-                <td>
-                  <p className="description-seller">
-                    {showFullDescription || product.description.length <= 100
-                      ? product.description
-                      : `${product.description.substring(0, 10)}...`}
-                    {product.description.length > 100&& (
-                      <button
-                        className="view-more-btn"
-                        onClick={() => setShowFullDescription(!showFullDescription)}
-                      >
-                        {showFullDescription ? "View Less" : "View More"}
-                      </button>
-                    )}
-                  </p>
-                </td>
                 <td>{product.category}</td>
                 <td>₹{product.price}</td>
                 <td>
-                  <button
-                    className="edit-btn"
-                    onClick={() => handleEdit(product)}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(product._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+  <div className="button-container">
+    
+    <button className="edit-btn" onClick={() => handleEdit(product)}>Edit</button>
+    <button className="delete-btn" onClick={() => handleDelete(product._id)}>Delete</button>
+    <button className="details-btn" onClick={() => handleViewDetails(product)}>Details</button>
+  </div>
+</td>
+</tr>
+
             ))}
           </tbody>
         </table>
       )}
+
+      {/* ✅ View Details Modal */}
+      <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Product Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {currentProduct && (
+            <>
+              <img
+                src={`http://localhost:5000${currentProduct.imageUrl}`}
+                alt={currentProduct.productName}
+                className="modal-product-img"
+              />
+              <h4>{currentProduct.productName}</h4>
+              <p><strong>Category:</strong> {currentProduct.category}</p>
+              <p><strong>Price:</strong> ₹{currentProduct.price}</p>
+              <p><strong>Description:</strong> {currentProduct.description}</p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowDetailsModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       {/* ✅ Edit Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
@@ -148,16 +149,6 @@ const ProductList = () => {
         <Modal.Body>
           {currentProduct && (
             <>
-              {/* Product Image Preview */}
-              <div className="image-preview-container">
-                <img src={previewImage} alt="Preview" className="preview-image" />
-              </div>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Product Image</Form.Label>
-                <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
-              </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Product Name</Form.Label>
                 <Form.Control
@@ -168,7 +159,6 @@ const ProductList = () => {
                   }
                 />
               </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Price</Form.Label>
                 <Form.Control
@@ -179,7 +169,6 @@ const ProductList = () => {
                   }
                 />
               </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Category</Form.Label>
                 <Form.Control
@@ -190,7 +179,6 @@ const ProductList = () => {
                   }
                 />
               </Form.Group>
-
               <Form.Group className="mb-3">
                 <Form.Label>Description</Form.Label>
                 <Form.Control

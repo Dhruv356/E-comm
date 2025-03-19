@@ -353,42 +353,41 @@
 
 /* ProductList.css */
 /* ProductList.css */
+
+
+/* 🌟 General Product List Container */
 .product-list-container {
-  max-width: fit-content;
-  max-height: fit-content;
-  margin: 0 auto;
+ 
+  margin: 20px auto;
   text-align: center;
   background-color: #ffffff;
-  padding: 20px;
-  
-  border-radius: 8px;
-  color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.product-list-container h1{
-  color: #000000;
+/* 🔠 Title */
+.product-list-container h1 {
+  color: #222;
   margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
 }
 
+/* No Products Message */
 .no-products {
   color: #ccc;
   font-size: 18px;
 }
 
-/* Scrollable Table Container */
-.product-table-container {
-  max-height: 400px; /* Set max height for scroll */
-  overflow-y: auto;
-  border-radius: 8px;
-}
-
-/* Ensure table remains responsive */
+/* 🏷️ Table Styling */
 .product-table {
-  width: 100%;
+ 
   border-collapse: collapse;
-  color: #000000;
-  border-radius: 8px;
+  color: #000;
+  border-radius: 10px;
   overflow: hidden;
+  background: white;
 }
 
 /* Sticky Header */
@@ -396,17 +395,30 @@
   position: sticky;
   top: 0;
   background: #222831;
+  color: white;
   z-index: 10;
 }
 
-/* Make the body scrollable */
-.product-table tbody {
-  display: block;
-  max-height: 500px; /* Adjust height to ensure scrolling */
-  overflow-y: auto;
+.product-table th,
+.product-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Ensure proper column alignment */
+.product-table th {
+  background: #222831;
+  color: #ffffff;
+}
+
+/* 📜 Scrollable Table */
+.product-table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+/* Ensure Table Alignment */
 .product-table thead,
 .product-table tbody tr {
   display: table;
@@ -414,57 +426,143 @@
   table-layout: fixed;
 }
 
-.product-table th,
-.product-table td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #010000;
-}
-
-.product-table th {
-  background: #222831;
-  color: #ffffff;
-}
-.description-seller {
-  max-width: 300px; /* Adjust the width as needed */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-align: left; /* Align text to the left */
-  padding: 5px; /* Add padding for better spacing */
-  font-size: 14px; /* Adjust font size as needed */
-  color: #333; /* Set text color */
-}
+/* 🖼️ Product Image */
 .product-img {
   width: 70px;
   height: 70px;
-  object-fit: fill;
-  border-radius: 5px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  transition: transform 0.3s ease;
 }
 
+.product-img:hover {
+  transform: scale(1.1);
+  border-color: #4f46e5;
+}
+
+/* 📝 Description */
+.description-seller {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  padding: 5px;
+  font-size: 14px;
+  color: #333;
+}
+/* Button Container - Align Buttons in a Row */
+.button-container {
+  display: flex;
+  align-items: center;  /* Align buttons vertically in center */
+  justify-content: center;  /* Center buttons inside the table cell */
+  gap: 10px;  /* Add space between buttons */
+}
+
+/* 🎨 Button Styles */
 .edit-btn,
-.delete-btn {
+.delete-btn,
+.details-btn {
+  height: 40px;
+  width: 100px;
   border: none;
-  padding: 6px 12px;
+  padding: 10px 17px;
   cursor: pointer;
-  margin: 5px;
   font-weight: bold;
   border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  min-width: 100px;  /* Ensure consistent button width */
 }
 
+/* 🎨 Button Colors */
 .edit-btn {
   background: yellowgreen;
   color: white;
 }
 
 .delete-btn {
-  background: #D32F2F;
+  background: #d32f2f;
   color: white;
 }
 
+.details-btn {
+  background: #007bff;
+  color: white;
+}
+
+/* 🚀 Hover Effects */
 .edit-btn:hover,
-.delete-btn:hover {
-  opacity: 0.8;
+.delete-btn:hover,
+.details-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+/* 📌 MODAL STYLING */
+.modal-product-container {
+  padding: 20px;
+  text-align: center;
+}
+
+/* Product Image in Modal */
+.modal-product-img {
+  width: 100%;
+  height: 250px;
+  object-fit: fill;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+/* 🏷️ Modal Title */
+.modal-body h4 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* 📜 Modal Description */
+.modal-body p {
+  font-size: 16px;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* 💳 Price in Modal */
+.modal-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff3b3b;
+  margin-top: 10px;
+}
+
+/* 🚀 Modal Buttons */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 15px;
+}
+
+/* 🎭 Responsive Design */
+@media (max-width: 768px) {
+  .product-table th,
+  .product-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .details-btn,
+  .edit-btn,
+  .delete-btn {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .modal-product-img {
+    height: 200px;
+  }
 }
 
 
@@ -583,10 +681,10 @@ select,
 
 /* Product Image */
 .product-img {
-  width: 50px;
-  height: 50px;
+  width: 90px;
+  height: 90px;
   border-radius: 6px;
-  object-fit: cover;
+  object-fit: fill;
   display: inline-block;
   vertical-align: middle;
   margin-right: 10px;
@@ -675,4 +773,85 @@ select:hover {
   object-fit: fill;
   border-radius: 10px;
   border: 2px solid #ddd;
+}
+/* 🏠 Seller Orders Container */
+.seller-orders-container {
+ 
+  margin: 20px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 📜 Table Styles */
+.orders-table, .product-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.orders-table th, .orders-table td,
+.product-table th, .product-table td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.orders-table th {
+  background: #222831;
+  color: white;
+}
+
+/* 📌 View Details Button */
+.ord-details-btn {
+  width: 100px;
+  height: 45px;
+  background: #007bff;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  border: none;
+
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.details-btn:hover {
+  background: #0056b3;
+}
+
+/* 🔍 Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 900px;
+  text-align: center;
+}
+
+/* ❌ Close Button */
+.close-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-btn:hover {
+  background: darkred;
 }
