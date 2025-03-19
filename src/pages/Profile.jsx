@@ -165,22 +165,7 @@ const Profile = ({ user, setUser }) => {
         </button>
       </div>
 
-      {/* Order History */}
-      <div className="profile-section">
-        <h2>Order History</h2>
-        {orderHistory.length > 0 ? (
-          <ul>
-            {orderHistory.map((order, index) => (
-              <li key={index}>
-                Order #{order.id} - {order.date} - {order.status}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No orders found.</p>
-        )}
-      </div>
-
+   
       <button className="logout-btn" onClick={handleLogout}>
         Logout
       </button>

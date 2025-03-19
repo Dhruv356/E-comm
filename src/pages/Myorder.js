@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import "../index.css"
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ const MyOrders = () => {
             <div key={order?._id} className="order-card">
               <div className="order-header">
                 <h3 className="order-id">
-                  Order <span className="text-red">#{order?._id}</span>
+                  Order <span className="text-red">#</span>
                 </h3>
                 <span className={`order-status ${order?.status?.toLowerCase()}`}>
                   {order?.status}
@@ -107,21 +107,42 @@ const MyOrders = () => {
       )}
       {/* Show Order Details */}
       {selectedOrder && (
-        <div className="order-details">
-          <h3>📜 Order Details</h3>
-          <p>Order ID: {selectedOrder._id}</p>
-          <p>Status: {selectedOrder.status}</p>
-          <p>Total Price: ₹{selectedOrder.totalPrice}</p>
-          <h4>Items:</h4>
-          <ul>
-            {selectedOrder.items.map((item) => (
-              <li key={item.productId} className="order-item">
-                {item.name} - ₹{item.price} x {item.quantity}
-              </li>
-            ))}
-          </ul>
-          <button className="close-btn" onClick={() => setSelectedOrder(null)}>❌ Close Details</button>
-        </div>
+     <div className="order-details">
+     <h3>📜 Order Details</h3>
+     <p><strong>Order ID:</strong> {selectedOrder._id}</p>
+     <p><strong>Status:</strong> {selectedOrder.status}</p>
+     <p><strong>Total Price:</strong> ₹{selectedOrder.totalPrice}</p>
+     
+     {/* 🛍️ Ordered Items List */}
+     <h4>🛒 Ordered Products:</h4>
+     <div className="ordered-items">
+       {selectedOrder.items.map((item) => (
+         <div key={item.productId} className="ordered-item">
+           {/* Product Image */}
+{/*            
+           <img 
+             src={item.imageUrl?.startsWith("/uploads") 
+               ? `http://localhost:5000${item.imageUrl}` 
+               : item.imgUrl || "https://via.placeholder.com/100"
+             } 
+             alt={item.name} 
+             className="ordered-item-image"
+           /> */}
+           
+           {/* Product Details */}
+           <div className="ordered-item-details">
+             <p className="ordered-item-name"><strong>{item.name}</strong></p>
+             <p className="ordered-item-price">💰 ₹{item.price} x {item.quantity}</p>
+             <p className="ordered-item-total">Total: ₹{(item.price * item.quantity).toFixed(2)}</p>
+           </div>
+         </div>
+       ))}
+     </div>
+   
+     {/* ❌ Close Button */}
+     <button className="close-btn" onClick={() => setSelectedOrder(null)}>❌ Close Details</button>
+   </div>
+   
       )}
     </div>
   );

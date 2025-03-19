@@ -36,6 +36,7 @@ const ProductCard = ({ title, productItem }) => {
       {title === "Big Discount" ? (
         <span className="discount">{productItem.discount}% Off</span>
       ) : null}
+      <div >
       <img
         loading="lazy"
         onClick={handleClick}
@@ -50,6 +51,7 @@ const ProductCard = ({ title, productItem }) => {
           e.target.src = "fallback-image.jpg";
         }}
       />
+      </div>
       <div className="product-like" onClick={handleLike}>
         <ion-icon name={liked ? "heart" : "heart-outline"}></ion-icon>
       </div>

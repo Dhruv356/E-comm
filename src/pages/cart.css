@@ -164,4 +164,73 @@
       padding: 10px;
     }
   }
+  .cart-total {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .cart-total h2 {
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .d_flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .d_flex h4 {
+    font-size: 16px;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  .d_flex h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .total-amount {
+    border-top: 2px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  
+  .total-amount h3 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #222;
+  }
+  
+  .total-amount h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e63946;
+  }
+  
+  .check-out-btn {
+    width: 100%;
+    background: #e63946;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+  }
+  
+  .check-out-btn:hover {
+    background: #d62828;
+  }
   

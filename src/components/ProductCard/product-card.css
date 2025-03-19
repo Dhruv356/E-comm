@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 .thumbnail-container{
-    margin: 10px;
+
     
     display: flex;
     flex-direction: row;
@@ -18,7 +18,7 @@
     margin-left: 10px;
 }
 .thumbnail-container img{
-    margin: 50px;
+
     width: 100px;
     height: 100px;
     object-fit: contain;

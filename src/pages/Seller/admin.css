@@ -425,7 +425,16 @@
   background: #222831;
   color: #ffffff;
 }
-
+.description-seller {
+  max-width: 300px; /* Adjust the width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left; /* Align text to the left */
+  padding: 5px; /* Add padding for better spacing */
+  font-size: 14px; /* Adjust font size as needed */
+  color: #333; /* Set text color */
+}
 .product-img {
   width: 70px;
   height: 70px;
@@ -653,4 +662,17 @@ select:hover {
 
 .view-btn:hover {
   text-decoration: underline;
+}
+.image-preview-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.preview-image {
+  width: 150px;
+  height: 150px;
+  object-fit: fill;
+  border-radius: 10px;
+  border: 2px solid #ddd;
 }

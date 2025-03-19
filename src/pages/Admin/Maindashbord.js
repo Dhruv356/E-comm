@@ -82,7 +82,7 @@ const Maindashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1 className="dashboard-title">Admin Dashboard</h1>
+      <h1 className="dashboard-title"></h1>
 
       <div className="analytics-cards">
         <motion.div className="card" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>

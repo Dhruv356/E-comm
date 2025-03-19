@@ -28,6 +28,18 @@ const Cart = () => {
     }
     navigate("/checkout", { state: { cartList, totalPrice } });
   };
+// Calculate Tax (18% GST Example)
+const taxRate = 0.18;
+const taxAmount = totalPrice * taxRate;
+
+// Shipping Charge (Free if order > ₹5000)
+const shippingCharge = totalPrice > 5000 ? 0 : 100;
+
+// Discount (Example: ₹200 off on orders above ₹3000)
+const discount = totalPrice > 3000 ? 200 : 0;
+
+// Calculate Final Total
+const finalTotal = totalPrice + taxAmount + shippingCharge - discount;
 
   return (
     <section className="cart-items">
@@ -99,18 +111,52 @@ const Cart = () => {
           </Col>
 
           {/* Cart Summary Section */}
-          <Col md={4}>
-            <div className="cart-total">
-              <h2>Cart Summary</h2>
-              <div className="d_flex">
-                <h4>Total Price:</h4>
-                <h3>₹&nbsp;{totalPrice}.00</h3>
-              </div>
-              <button className="check-out-btn" onClick={handleCheckout}>
-                Check-Out
-              </button>
-            </div>
-          </Col>
+        {/* Cart Summary Section */}
+<Col md={4}>
+  <div className="cart-total">
+    <h2>Cart Summary</h2>
+
+    {/* Subtotal */}
+    <div className="d_flex">
+      <h4>Subtotal:</h4>
+      <h3>₹&nbsp;{totalPrice.toFixed(2)}</h3>
+    </div>
+
+    {/* Shipping Charges (Dynamic) */}
+    <div className="d_flex">
+      <h4>Shipping:</h4>
+      <h3>
+        ₹&nbsp;
+        {totalPrice > 5000 ? "FREE" : shippingCharge.toFixed(2)}
+      </h3>
+    </div>
+
+    {/* Tax (18% GST/VAT Example) */}
+    <div className="d_flex">
+      <h4>Tax (18% GST):</h4>
+      <h3>₹&nbsp;{taxAmount.toFixed(2)}</h3>
+    </div>
+
+    {/* Discount (If applicable) */}
+    {discount > 0 && (
+      <div className="d_flex">
+        <h4>Discount:</h4>
+        <h3>- ₹&nbsp;{discount.toFixed(2)}</h3>
+      </div>
+    )}
+
+    {/* Final Total Amount */}
+    <div className="d_flex total-amount">
+      <h3>Final Total:</h3>
+      <h2>₹&nbsp;{finalTotal.toFixed(2)}</h2>
+    </div>
+
+    <button className="check-out-btn" onClick={handleCheckout}>
+      Check-Out
+    </button>
+  </div>
+</Col>
+
         </Row>
       </Container>
     </section>

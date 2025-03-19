@@ -10,8 +10,7 @@ const Checkout = () => {
   // Get cart items & total price from navigation state
   const cartItems = location.state?.cartList || [];
   const buyNowItem = location.state?.orderItems || []; // 👈 Handles "Buy Now" case
-  const totalPrice = location.state?.totalPrice || buyNowItem.reduce((sum, item) => sum + item.price * item.qty, 0);
-
+  const subTotal = location.state?.totalPrice || buyNowItem.reduce((sum, item) => sum + item.price * item.qty, 0);
   const [formData, setFormData] = useState({
     name: "",
     address: "",
@@ -106,7 +105,12 @@ const Checkout = () => {
       setLoading(false);
     }
   };
+ 
 
+  // Shipping & Tax Logic
+  const shippingCharge = subTotal > 500 ? 0 : 40; // Free shipping over ₹500
+  const tax = subTotal * 0.18; // 18% GST
+  const totalPrice = subTotal + shippingCharge + tax;
   return (
     <div className="checkout-wrapper">
       {/* Checkout Form */}
@@ -168,8 +172,12 @@ const Checkout = () => {
         ) : (
           <p>No items in cart</p>
         )}
-        <div className="order-total">
-          <strong>Total:</strong> ₹{totalPrice}
+       <div className="order-total-checkout">
+          <p>Subtotal: ₹{subTotal}</p>
+          <p>Shipping: ₹{shippingCharge === 0 ? "Free" : shippingCharge}</p>
+          <p>Tax (18%): ₹{tax.toFixed(2)}</p>
+          <hr />
+          <h3>Total: ₹{totalPrice.toFixed(2)}</h3>
         </div>
       </div>
     </div>

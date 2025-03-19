@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiUsers, FiShoppingCart, FiSettings, FiPackage,FiBarChart2} from "react-icons/fi";
 import Manageuser from "./Manageproducts";
@@ -10,6 +10,7 @@ import Maindashboard from "./Maindashbord";
 import ManageUsers from "./Manageusers";
 import Manageproducts from "./Manageproducts";
 import AdminOrders from "./AdminOrders";
+import Addproduct from "./Addproduct";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -60,6 +61,11 @@ const AdminDashboard = () => {
               <FiUsers className="icon" /> Manage Users
             </li>
           </Link>
+          <Link to="/superadmin/Add-products" className="nav-link">
+            <li>
+              <FiPackage className="icon" /> Add Products
+            </li> 
+            </Link>
           <Link to="/superadmin/manage-products" className="nav-link">
             <li>
               <FiShoppingCart className="icon" /> Manage Products
@@ -73,6 +79,7 @@ const AdminDashboard = () => {
           <li>
             <FiSettings className="icon" /> Settings
           </li>
+          
         </ul>
       </motion.div>
 
@@ -87,8 +94,10 @@ const AdminDashboard = () => {
         <Routes>
           <Route path="dashboard" element={<Maindashboard />} />
           <Route path="manageusers" element={<ManageUsers />} />
+          <Route path="Add-products" element={<Addproduct/>} />
           <Route path="manage-products" element={<Manageproducts />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="/" element={<Navigate to="dashboard" />} />
         </Routes>
       </motion.div>
     </div>
