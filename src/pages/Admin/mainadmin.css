@@ -52,6 +52,8 @@
 
 /* Main Content */
 .admin-content {
+  width: auto ;
+  height: 95vh;
   flex-grow: 1;
   padding: 20px;
   background: white;
@@ -89,80 +91,6 @@
 
 
 
-
-.admin-wrapper {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.admin-title {
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  text-align: center;
-}
-
-.user-table-wrapper {
-  max-height: 500px;
-  overflow-y: auto;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 800px;
-}
-
-.user-table thead {
-  position: sticky;
-  top: 0;
-  background-color: #f9fafb;
-  z-index: 1;
-}
-
-.user-table th,
-.user-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
-  text-align: left;
-}
-
-.user-table tr:hover {
-  background-color: #f1f5f9;
-}
-
-.role-select {
-  padding: 6px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.delete-button {
-  padding: 6px 12px;
-  color: #fff;
-  background-color: #dc3545;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
-.delete-button:hover {
-  background-color: #c82333;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .user-table {
-    min-width: 100%;
-  }
-
-  .admin-title {
-    font-size: 1.5rem;
-  }
-}
 /* AdminLogin.css */
 
 .admin-login-wrapper {
@@ -312,151 +240,7 @@ body {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
 }
 
-/* ➕ Add Product Button */
-.add-product-btn {
-  
-  margin-left: 85%;
-  display: flex;
-  align-items: center;
-  background-color: #000;
-  color: #ffffff;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-  margin-bottom: 15px;
-  font-size: 14px;
-}
 
-.add-product-btn:hover {
-  background-color: #333;
-}
-
-/* 📦 Product Table */
-.table-container {
-  overflow-x: auto; /* Enables horizontal scrolling if necessary */
-}
-
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  background: #ffffff;
-}
-
-.product-table th,
-.product-table td {
-  padding: 8px;
-  text-align: center;
-  border-bottom: 1px solid #dee2e6;
-  white-space: nowrap; /* Prevents text wrapping */
-}
-
-.product-table th {
-  background-color: #212529;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.product-table tr:nth-child(even) {
-  background-color: #f8f9fa;
-}
-
-.product-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-/* 🖼 Product Image */
-.product-image {
-  width: 60px;
-  height: 60px;
-  border-radius: 6px;
-  object-fit: cover;
-  background-color: #e9ecef;
-  display: block;
-  margin: 0 auto;
-}
-
-/* ✏️ Edit & 🗑 Delete Buttons */
-.actions {
-  display: flex;
-  gap: 6px;
-  justify-content: center;
-}
-
-.delete-btn {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 4px;
-  font-size: 12px;
-}
-.edit-btn{
-  background-color: yellow;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border-radius: 4px;
-  font-size: 12px;
-}
-
-.edit-btn {
-  background-color: #ffc107;
-  color: #000;
-}
-
-.edit-btn:hover {
-  background-color: #ffca2c;
-}
-
-.delete-btn {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.delete-btn:hover {
-  background-color: #bb2d3b;
-}
-
-/* ✅ Responsive Adjustments */
-@media (max-width: 768px) {
-  .page-title {
-    font-size: 20px;
-  }
-  
-  .add-product-btn {
-    font-size: 12px;
-    padding: 6px 10px;
-  }
-  
-  .product-table th,
-  .product-table td {
-    font-size: 12px;
-    padding: 6px;
-  }
-
-  .product-image {
-    width: 40px;
-    height: 40px;
-  }
-
-  .edit-btn, .delete-btn {
-    font-size: 10px;
-    padding: 4px 6px;
-  }
-}
 /*dashboard.css*/
 /* Global Styles */
 .dashboard-container {
@@ -547,4 +331,3 @@ body {
   background: #444;
 }
 
-/* addpagecdd */

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import "./adminorder.css";
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
@@ -32,33 +32,38 @@ const AdminOrders = () => {
       ) : orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        <table className="orders-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Customer</th>
-              <th>Total Price</th>
-              <th>Order Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.userId.name}</td>
-                <td>₹{order.totalPrice}</td>
-                <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                <td>
-                  <span className={`status ${order.status.toLowerCase()}`}>{order.status}</span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="orders-table-wrapper">
+          <div className="orders-table-container">
+            <table className="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Total Price</th>
+                  <th>Order Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td>{order._id}</td>
+                    <td>{order.userId.name}</td>
+                    <td>₹{order.totalPrice}</td>
+                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+                    <td>
+                      <span className={`status ${order.status.toLowerCase()}`}>{order.status}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       )}
     </div>
   );
+  
 };
 
 export default AdminOrders;

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCart, decreaseQty, deleteProduct } from "../app/features/cart/cartSlice";
@@ -45,11 +45,15 @@ const finalTotal = totalPrice + taxAmount + shippingCharge - discount;
     <section className="cart-items">
       <Container>
         <Row className="justify-content-center">
+          
           {/* Cart Items Section */}
           <Col md={8}>
+         
             {cartList.length === 0 ? (
               <h2 className="no-items">No Items in Cart</h2>
+              
             ) : (
+              
               cartList.map((item) => (
                 <div className="cart-list" key={item.id}>
                   <Row className="align-items-center">
@@ -106,9 +110,14 @@ const finalTotal = totalPrice + taxAmount + shippingCharge - discount;
                     </Col>
                   </Row>
                 </div>
+                
               ))
             )}
+                    <button
+            className="continue-shopping-btn"
+            onClick={() => navigate("/shop")}>continue shopping</button>
           </Col>
+      
 
           {/* Cart Summary Section */}
         {/* Cart Summary Section */}

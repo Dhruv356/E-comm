@@ -233,4 +233,38 @@
   .check-out-btn:hover {
     background: #d62828;
   }
+  .continue-shopping-btn {
+    background-color: #d62828; /* Red color */
+    color: white; /* White text for better contrast */
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 20px; /* Comfortable padding */
+    border: none;
+    border-radius: 6px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* Removes underline if used as a link */
+    display: inline-block;
+    text-align: center;
+  }
+  
+  /* Hover effect */
+  .continue-shopping-btn:hover {
+    background-color: #b71c1c; /* Darker red for hover */
+    transform: scale(1.05); /* Slightly enlarges the button */
+  }
+  
+  /* Active (clicked) effect */
+  .continue-shopping-btn:active {
+    background-color: #a51a1a; /* Even darker red */
+    transform: scale(0.98); /* Slightly shrinks on click */
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    .continue-shopping-btn {
+      font-size: 14px;
+      padding: 10px 16px;
+    }
+  }
   

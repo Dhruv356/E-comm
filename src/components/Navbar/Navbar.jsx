@@ -15,6 +15,7 @@ const NavBar = () => {
   const [expand, setExpand] = useState(false);
   const [userRole, setUserRole] = useState(localStorage.getItem("userRole") || "");
   const [isFixed, setIsFixed] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false); // ✅ Fix dropdown toggle
   // fixed Header
   function scrollHandler() {
     if (window.scrollY >= 100) {
@@ -183,36 +184,21 @@ const NavBar = () => {
               </Link>
             </Nav.Item>
             <Nav.Item className="profile-dropdown">
-              <Dropdown align="end">
+              <Dropdown show={showDropdown} onToggle={(isOpen) => setShowDropdown(isOpen)}>
                 <Dropdown.Toggle
                   variant="link"
                   id="profile-dropdown"
                   className="navbar-link profile-dropdown-toggle"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="white"
-                    className="nav-icon"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
-                      clipRule="evenodd"
-                    />
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" className="nav-icon">
+                    <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
                   </svg>
                 </Dropdown.Toggle>
 
-                <Dropdown.Menu className="profile-dropdown">
-                  <Dropdown.Item as={Link} to="/profile">
-                    Profile
-                  </Dropdown.Item>
-                  <Dropdown.Item as={Link} to="/Myorders">
-                    My Orders
-                  </Dropdown.Item>
-                  <Dropdown.Item onClick={handleLogout}>
-                    Logout
-                  </Dropdown.Item>
+                <Dropdown.Menu className="profile-dropdown-menu">
+                  <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
+                  <Dropdown.Item as={Link} to="/Myorders">My Orders</Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav.Item>

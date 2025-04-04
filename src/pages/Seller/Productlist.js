@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./productlist.css";
+import "./productlist.css";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -42,10 +44,10 @@ const ProductList = () => {
     setCurrentProduct(product);
     setShowEditModal(true);
   };
-
   const handleSaveEdit = async () => {
     try {
       const token = localStorage.getItem("token");
+  
       await axios.put(
         `http://localhost:5000/api/products/${currentProduct._id}`,
         {
@@ -53,16 +55,24 @@ const ProductList = () => {
           price: currentProduct.price,
           category: currentProduct.category,
           description: currentProduct.description,
+          modelNumber: currentProduct.modelNumber,
+          color: currentProduct.color,
+          size: currentProduct.size || "N/A",
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
+  
       alert("Product updated successfully!");
       setShowEditModal(false);
-      fetchSellerProducts();
+      fetchSellerProducts(); // Refresh product list
     } catch (error) {
       alert("Failed to update product.");
+      console.error("Product update error:", error.response?.data || error.message);
     }
   };
+  
 
   const handleViewDetails = (product) => {
     setCurrentProduct(product);
@@ -70,49 +80,51 @@ const ProductList = () => {
   };
 
   return (
-    <div className="product-list-container">
-      <h1>Product List</h1>
-      {products.length === 0 ? (
-        <p className="no-products">No products found.</p>
-      ) : (
-        <table className="product-table">
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products.map((product) => (
-              <tr key={product._id}>
-                <td>
-                  <img
-                    src={`http://localhost:5000${product.imageUrl}`}
-                    alt={product.productName}
-                    className="product-img"
-                    width="50"
-                  />
-                </td>
-                <td>{product.productName}</td>
-                <td>{product.category}</td>
-                <td>₹{product.price}</td>
-                <td>
-  <div className="button-container">
     
-    <button className="edit-btn" onClick={() => handleEdit(product)}>Edit</button>
-    <button className="delete-btn" onClick={() => handleDelete(product._id)}>Delete</button>
-    <button className="details-btn" onClick={() => handleViewDetails(product)}>Details</button>
-  </div>
-</td>
-</tr>
+    <div className="product-list-container">
+  <h1>Product List</h1>
+  {products.length === 0 ? (
+    <p className="no-products">No products found.</p>
+  ) : (
+    <div className="table-container">
+      <table className="product-table">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((product) => (
+            <tr key={product._id}>
+              <td>
+                <img
+                  src={`http://localhost:5000${product.imageUrl}`}
+                  alt={product.productName}
+                  className="product-img"
+                  width="50"
+                />
+              </td>
+              <td>{product.productName}</td>
+              <td>{product.category}</td>
+              <td>₹{product.price}</td>
+              <td>
+                <div className="button-container">
+                  <button className="edit-btn" onClick={() => handleEdit(product)}>Edit</button>
+                  <button className="delete-btn" onClick={() => handleDelete(product._id)}>Delete</button>
+                  <button className="details-btn" onClick={() => handleViewDetails(product)}>Details</button>
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
 
-            ))}
-          </tbody>
-        </table>
-      )}
 
       {/* ✅ View Details Modal */}
       <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)}>
@@ -142,66 +154,105 @@ const ProductList = () => {
       </Modal>
 
       {/* ✅ Edit Modal */}
-      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit Product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {currentProduct && (
-            <>
-              <Form.Group className="mb-3">
-                <Form.Label>Product Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={currentProduct.productName}
-                  onChange={(e) =>
-                    setCurrentProduct({ ...currentProduct, productName: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Price</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={currentProduct.price}
-                  onChange={(e) =>
-                    setCurrentProduct({ ...currentProduct, price: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Category</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={currentProduct.category}
-                  onChange={(e) =>
-                    setCurrentProduct({ ...currentProduct, category: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Description</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={currentProduct.description}
-                  onChange={(e) =>
-                    setCurrentProduct({ ...currentProduct, description: e.target.value })
-                  }
-                />
-              </Form.Group>
-            </>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleSaveEdit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+    {/* ✅ Edit Product Modal (Without Image, All Fields Included) */}
+<Modal show={showEditModal} onHide={() => setShowEditModal(false)} className="edit-modal">
+  <Modal.Header closeButton>
+    <Modal.Title>Edit Product</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    {currentProduct && (
+      <>
+        <Form.Group className="mb-3">
+          <Form.Label>Product Name</Form.Label>
+          <Form.Control
+            type="text"
+            value={currentProduct.productName}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, productName: e.target.value })
+            }
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Price</Form.Label>
+          <Form.Control
+            type="number"
+            value={currentProduct.price}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, price: e.target.value })
+            }
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Category</Form.Label>
+          <Form.Control
+            type="text"
+            value={currentProduct.category}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, category: e.target.value })
+            }
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            value={currentProduct.description}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, description: e.target.value })
+            }
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Model Number</Form.Label>
+          <Form.Control
+            type="text"
+            value={currentProduct.modelNumber}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, modelNumber: e.target.value })
+            }
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Color</Form.Label>
+          <Form.Control
+            type="text"
+            value={currentProduct.color}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, color: e.target.value })
+            }
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-3">
+          <Form.Label>Size</Form.Label>
+          <Form.Control
+            type="text"
+            value={currentProduct.size}
+            onChange={(e) =>
+              setCurrentProduct({ ...currentProduct, size: e.target.value })
+            }
+          />
+        </Form.Group>
+      </>
+    )}
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+      Close
+    </Button>
+    <Button variant="primary" onClick={handleSaveEdit}>
+      Save Changes
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </div>
   );
 };

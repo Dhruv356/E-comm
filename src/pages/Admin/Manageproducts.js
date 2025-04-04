@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
-import "../Admin/mainadmin.css"; // ✅ Import external CSS
+import "./manageproduct.css";
 
 const Manageproducts = () => {
   const [search, setSearch] = useState("");
@@ -91,90 +91,142 @@ const Manageproducts = () => {
 
       {/* <button className="add-product-btn">➕ Add New Product</button> */}
 
-      <div className="product-card">
-        <table className="product-table">
-        <thead>
-  <tr>
-    <th>#</th>
-    <th>Image</th>
-    <th>Product Name</th>
-    <th>Price</th>
-    <th>Category</th>
-    <th>Seller</th> {/* ✅ New Column */}
-    <th>Actions</th>
-  </tr>
-</thead>
+      <div className="admin_table-container">
+  <table className="product-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Image</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Seller</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {products.map((product, index) => (
+        <tr key={product._id}>
+          <td>{index + 1}</td>
+          <td>
+            {product.imageUrl ? (
+              <img
+                src={`http://localhost:5000${product.imageUrl}`}
+                alt={product.productName}
+                className="product-image"
+              />
+            ) : (
+              "No Image"
+            )}
+          </td>
+          <td>{product.productName}</td>
+          <td>₹{product.price}</td>
+          <td>{product.category}</td>
+          <td>
+            {product.sellerId ? (
+              <>
+                <strong>{product.sellerId.name}</strong> <br />
+                <small>{product.sellerId.email}</small>
+              </>
+            ) : (
+              "Unknown Seller"
+            )}
+          </td>
+          <td className="actions">
+            <button className="edit-btn" onClick={() => handleEdit(product)}>✏️ Edit</button>
+            <button className="delete-btn" onClick={() => handleDelete(product._id)}>🗑 Delete</button>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
 
-<tbody>
-  {products.map((product, index) => (
-    <tr key={product._id}>
-      <td>{index + 1}</td>
-      <td>
-        {product.imageUrl ? (
-          <img
-            src={`http://localhost:5000${product.imageUrl}`}
-            alt={product.productName}
-            className="product-image"
-          />
-        ) : (
-          "No Image"
-        )}
-      </td>
-      <td>{product.productName}</td>
-      <td>₹{product.price}</td>
-      <td>{product.category}</td>
-      <td>
-        {product.sellerId ? (
-          <>
-            <strong>{product.sellerId.name}</strong> <br />
-            <small>{product.sellerId.email}</small>
-          </>
-        ) : (
-          "Unknown Seller"
-        )}
-      </td>
-      <td>
-        <button className="edit-btn" onClick={() => handleEdit(product)}>✏️ Edit</button>
-        <button className="delete-btn" onClick={() => handleDelete(product._id)}>🗑 Delete</button>
-      </td>
-    </tr>
-  ))}
-</tbody>
 
-        </table>
-      </div>
+     {/* 📝 Edit Product Modal */}
+{showEditModal && (
+  <div className="modal">
+    <div className="modal-content-admin">
+      <h2>Edit Product</h2>
 
-      {/* 📝 Edit Product Modal */}
-      {showEditModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Edit Product</h2>
-            <input
-              type="text"
-              value={currentProduct.productName}
-              onChange={(e) => setCurrentProduct({ ...currentProduct, productName: e.target.value })}
-              className="form-control"
-              placeholder="Product Name"
-            />
-            <input
-              type="number"
-              value={currentProduct.price}
-              onChange={(e) => setCurrentProduct({ ...currentProduct, price: e.target.value })}
-              className="form-control"
-              placeholder="Price"
-            />
-            <input
-              type="text"
-              value={currentProduct.category}
-              onChange={(e) => setCurrentProduct({ ...currentProduct, category: e.target.value })}
-              className="form-control"
-              placeholder="Category"
-            />
-            <button className="edit-btn" onClick={handleSaveEdit}>Save</button>
-            <button className="delete-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
+      {/* Product Name */}
+      <input
+        type="text"
+        value={currentProduct.productName}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, productName: e.target.value })}
+        className="form-control"
+        placeholder="Product Name"
+      />
+
+      {/* Description */}
+      <textarea
+        value={currentProduct.description}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, description: e.target.value })}
+        className="form-control"
+        placeholder="Product Description"
+      ></textarea>
+
+      {/* Price */}
+      <input
+        type="number"
+        value={currentProduct.price}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, price: e.target.value })}
+        className="form-control"
+        placeholder="Price"
+      />
+
+      {/* Stock */}
+      <input
+        type="number"
+        value={currentProduct.stock}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, stock: e.target.value })}
+        className="form-control"
+        placeholder="Stock Quantity"
+      />
+
+      {/* Discount */}
+      <input
+        type="number"
+        value={currentProduct.discount}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, discount: e.target.value })}
+        className="form-control"
+        placeholder="Discount (%)"
+      />
+
+      {/* Category */}
+      <input
+        type="text"
+        value={currentProduct.category}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, category: e.target.value })}
+        className="form-control"
+        placeholder="Category"
+      />
+
+      {/* Color */}
+      <input
+        type="text"
+        value={currentProduct.color}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, color: e.target.value })}
+        className="form-control"
+        placeholder="Color"
+      />
+
+      {/* Size */}
+      <input
+        type="text"
+        value={currentProduct.size}
+        onChange={(e) => setCurrentProduct({ ...currentProduct, size: e.target.value })}
+        className="form-control"
+        placeholder="Size (if applicable)"
+      />
+
+      {/* Save and Cancel Buttons */}
+      <button className="edit-btn" onClick={handleSaveEdit}>Save</button>
+      <button className="delete-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

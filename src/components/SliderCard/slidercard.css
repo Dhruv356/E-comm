@@ -95,3 +95,27 @@
     background: linear-gradient(135deg, #f80404, #d90429); /* Red Gradient */
     transform: scale(1.05);
 }
+/* ✅ SlideCard Default Visibility */
+.box {
+  opacity: 1; /* Ensure visibility even if GSAP fails */
+  transform: scale(1);
+}
+
+/* ✅ Text - Ensure Visibility */
+.slide-title,
+.slide-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ✅ Image - Ensure Visibility */
+.slide-img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ✅ Button - Ensure Visibility */
+.shop-btn {
+  opacity: 1;
+  transform: translateY(0);
+}

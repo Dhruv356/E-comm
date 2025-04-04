@@ -116,6 +116,20 @@ const Profile = ({ user, setUser }) => {
 //   }
 // };
 
+// ✅ Request to Become a Seller
+const requestSeller = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    await axios.post("http://localhost:5000/api/request-seller", {}, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    toast.success("Seller request sent!");
+    setProfile({ ...profile, sellerRequest: true }); // Update state
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Failed to send request.");
+  }
+};
+
   return (
 <div className="profile-page">
   <div className="profile-container">
@@ -169,6 +183,15 @@ const Profile = ({ user, setUser }) => {
       <button className="logout-btn" onClick={handleLogout}>
         Logout
       </button>
+     {/* ✅ FIX: Only access profile.role if profile is not null */}
+     {profile && profile.role === "user" && !profile.sellerRequest && (
+          <button className="submit-btn" onClick={requestSeller}>
+            Become a Seller
+          </button>
+        )}
+
+        {profile && profile.sellerRequest && <p>Seller request pending approval.</p>}
+      
     </div>
   </div>
 </div>

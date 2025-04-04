@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import"./admin.css";
 
 export const ManageProduct = () => {
   const [file, setFile] = useState(null);

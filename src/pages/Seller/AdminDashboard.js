@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+         import { useState, useEffect } from "react";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Bar } from "react-chartjs-2";
 import axios from "axios";
@@ -17,6 +17,7 @@ import { Manageuser } from "./Manageuser";
 import { ManageProduct } from "./ManageProduct";
 import ProductList from "./Productlist";
 import SellerOrders from "./SellerOrder";
+import "./admin.css";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);

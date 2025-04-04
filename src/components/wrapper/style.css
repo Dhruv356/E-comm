@@ -20,6 +20,8 @@
 }
 
 .wrapper .feature {
+  margin-top: 30px;
+  margin-bottom: 30px;
   padding: 10px;
   border: 4px solid white;
 }

@@ -1,14 +1,19 @@
 /* Product Card - Contrast Theme */
 .product {
-    background: linear-gradient(135deg, #ffffff, #f8f9fa); /* Light Gradient */
+    background: #ffffff;
     padding: 20px;
     position: relative;
     border-radius: 12px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15); /* Soft Shadow */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin: 15px;
-    transition: all 0.3s ease-in-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow: hidden;
+    min-height: 400px; /* ✅ Ensures all cards have a minimum height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
+
 .thumbnail-container{
 
     
